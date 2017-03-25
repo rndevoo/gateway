@@ -1,0 +1,22 @@
+{
+  "name": "letsmeet-backend",
+  "version": "1.0.0",
+  "description": "The backend of LetsMeet",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strattadb/letsmeet-backend.git"
+  },
+  "author": "Diego Stratta",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/strattadb/letsmeet-backend/issues"
+  },
+  "homepage": "https://github.com/strattadb/letsmeet-backend#readme",
+  "dependencies": {
+    "koa": "^2.2.0"
+  }
+}
