@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/strattadb/letsmeet-backend#readme",
   "dependencies": {
-    "koa": "^2.2.0"
+    "bcrypt": "^1.0.2",
+    "koa": "^2.2.0",
+    "koa-jwt": "^3.0.1",
+    "pg": "^6.1.5"
   }
 }
