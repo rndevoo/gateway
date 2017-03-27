@@ -2,14 +2,13 @@ module.exports = {
   "root": true,
   "env": {
     "node": true,
-    "es6": true,
-    "commonjs": true,
   },
   "extends": "eslint:recommended",
-  "parser": "babel-eslint",
   "parserOptions": {
-    "sourceType": "module",
-    "allowImportExportEverywhere": true,
+    "ecmaVersion": 2017,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+    },
   },
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
