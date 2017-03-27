@@ -4,8 +4,8 @@
   "description": "The backend of LetsMeet",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src"
+    "test": "mocha",
+    "lint": "eslint src test --fix"
   },
   "repository": {
     "type": "git",
@@ -25,8 +25,11 @@
     "pg": "^6.1.5"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^3.18.0",
-    "nodemon": "^1.11.0"
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "sinon": "^2.1.0"
   },
   "engines": {
     "node": ">=7.6.0"
