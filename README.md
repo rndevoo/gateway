@@ -5,7 +5,7 @@
 This is the official repository of the backend of LetsMeet.
 
 It consists of a RESTful API written in [Node.js](https://nodejs.org/en/)
-and [Koa](http://koajs.com/) with features of es2017,
+and [Koa](http://koajs.com/) with features of ES2017,
 a database using [PostgreSQL](https://www.postgresql.org/) and
 authentication using [JSON Web Tokens](https://jwt.io/).
 
@@ -121,9 +121,15 @@ $ npm run prod
 
 ## Project Structure
 
-```shell
-# TODO
-```
+- **`docs`**: contains the documentation of the API.
+
+- **`scripts`**: contains various useful scripts.
+
+- **`src`**: contains the source code. The codebase is written in ES2017.
+
+- **`test`**: contains all the tests. The unit tests are written with
+[Mocha](https://mochajs.org/) and the libraries [Chai](http://chaijs.com/) and
+[Sinon](http://sinonjs.org/).
 
 ## Deploying
 
