@@ -107,8 +107,16 @@ $ psql letsmeet -f scripts/create_tables.sql
 
 ## Running the Server
 
+For development:
+
 ```shell
-$ npm start
+$ npm run dev
+```
+
+For production:
+
+```shell
+$ npm run prod
 ```
 
 ## Project Structure
