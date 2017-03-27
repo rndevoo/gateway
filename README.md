@@ -125,10 +125,18 @@ $ npm run prod
 # TODO
 ```
 
-## Running the Tests
+## Tests and Linting
+
+Run the tests:
 
 ```shell
 $ npm test
+```
+
+Lint the code:
+
+```shell
+$ npm run lint
 ```
 
 ## License
