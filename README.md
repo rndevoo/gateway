@@ -102,7 +102,7 @@ $ createdb letsmeet
 Create the tables:
 
 ```shell
-$ psql letsmeet -f scripts/create_schema.sql
+$ psql letsmeet -f scripts/create_tables.sql
 ```
 
 ## Running the Server
