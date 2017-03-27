@@ -2,8 +2,10 @@
   "name": "letsmeet-backend",
   "version": "1.0.0",
   "description": "The backend of LetsMeet",
-  "main": "src/server.js",
+  "main": "index.js",
   "scripts": {
+    "dev": "nodemon index.js",
+    "prod": "node index.js",
     "test": "mocha",
     "lint": "eslint src test --fix"
   },
