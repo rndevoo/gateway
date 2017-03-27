@@ -125,6 +125,16 @@ $ npm run prod
 # TODO
 ```
 
+## Deploying
+
+For now I'm using Heroku to deploy.
+
+Push the code to the Heroku repository:
+
+```shell
+$ git push heroku master
+```
+
 ## Tests and Linting
 
 Run the tests:
