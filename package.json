@@ -4,9 +4,12 @@
   "description": "The backend of LetsMeet",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "prod": "node src/server.js",
-    "test": "mocha",
+    "build": "babel src -d dist",
+    "serve:dev": "nodemon src/server.js --exec babel-node",
+    "serve:prod": "node dist/server.js",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "test": "mocha --compilers js:babel-register",
     "lint": "eslint src test --fix"
   },
   "repository": {
@@ -27,6 +30,8 @@
     "pg": "^6.1.5"
   },
   "devDependencies": {
+    "babel-cli": "^6.24.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "chai": "^3.5.0",
     "eslint": "^3.18.0",
     "mocha": "^3.2.0",
