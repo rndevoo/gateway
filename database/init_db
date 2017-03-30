@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+CURRENT_DIR="$( builtin cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+echo "Dropping letsmeet database..."
+dropdb --if-exists letsmeet
+
+echo "Creating letsmeet database..."
+createdb letsmeet
+
+echo "Creating types and tables..."
+psql letsmeet -f "${CURRENT_DIR}/queries/create_everything.sql"
+
+echo "Done!"
