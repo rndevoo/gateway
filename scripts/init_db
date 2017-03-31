@@ -9,6 +9,6 @@ echo "Creating letsmeet database..."
 createdb letsmeet
 
 echo "Creating types and tables..."
-psql letsmeet -f "${CURRENT_DIR}/queries/create_everything.sql"
+psql letsmeet -f "${CURRENT_DIR}/../database/create_everything.sql"
 
 echo "Done!"
