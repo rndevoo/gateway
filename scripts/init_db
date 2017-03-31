@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+# This file's directory
 CURRENT_DIR="$( builtin cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT_DIR="${CURRENT_DIR}/.."
 
 echo "Dropping letsmeet database..."
 dropdb --if-exists letsmeet
@@ -9,6 +11,11 @@ echo "Creating letsmeet database..."
 createdb letsmeet
 
 echo "Creating types and tables..."
-psql letsmeet -f "${CURRENT_DIR}/../database/create_everything.sql"
+psql letsmeet -f "${PROJECT_ROOT_DIR}/database/create_gender_identities_type.sql"
+psql letsmeet -f "${PROJECT_ROOT_DIR}/database/create_users_and_profiles_tables.sql"
+psql letsmeet -f "${PROJECT_ROOT_DIR}/database/create_activation_tokens_table.sql"
+psql letsmeet -f "${PROJECT_ROOT_DIR}/database/create_user_settings_table.sql"
 
 echo "Done!"
+
+exit 0

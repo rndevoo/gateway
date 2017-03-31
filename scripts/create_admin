@@ -20,35 +20,35 @@ const { User } = require('./../src/users/models');
 })();
 
 async function readData () {
-  // Ask user for username
+  // Ask for username
   let username = await new Promise((resolve) => {
     rl.question('Enter username: ', (username) => {
       resolve(username);
     });
   });
 
-  // Ask user for first name
+  // Ask for first name
   let firstName = await new Promise((resolve) => {
     rl.question('Enter first name: ', (firstName) => {
       resolve(firstName);
     });
   });
 
-  // Ask user for last name
+  // Ask for last name
   let lastName = await new Promise((resolve) => {
     rl.question('Enter last name: ', (lastName) => {
       resolve(lastName);
     });
   });
 
-  // Ask user for email
+  // Ask for email
   let email = await new Promise((resolve) => {
     rl.question('Enter email: ', (email) => {
       resolve(email);
     });
   });
 
-  // Ask user for password
+  // Ask for password
   let password = await new Promise((resolve) => {
     rl.question('Enter password: ', (password) => {
       resolve(password);
