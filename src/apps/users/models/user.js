@@ -1,17 +1,19 @@
 'use strict';
 
-import pool from './../shared/pgpool.js';
+import bcrypt from 'bcrypt';
+
+import pool from './../../../shared/pgpool';
 
 export class User {
   static async list () {
   }
 
   static async create (data, { isAdmin = false }) {
+    const SALT_ROUNDS = 10;
+
     // If we're creating an admin make it immediately active
     const isActive = isAdmin;
-
-    // TODO: Use bcrypt to hash password
-    const hashedPassword = data.password;
+    const hashedPassword = await bcrypt.hash(data.password, SALT_ROUNDS);
 
     const sqlString = `
     INSERT INTO users (username, first_name, last_name, email, password, is_active, is_admin)
@@ -29,9 +31,5 @@ export class User {
     ];
 
     await pool.query(sqlString, sqlValues);
-  }
-
-  static async createAdmin (data) {
-    await User.create(data, { isAdmin: true });
   }
 }
