@@ -1,0 +1,68 @@
+#! /usr/bin/env node
+
+// Allow me to require ES2015 modules
+require('babel-core/register');
+
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+const { User } = require('./../src/users/models');
+
+(async function main () {
+  let data = await readData();
+
+  User.createAdmin(data).then(() => {
+    console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
+  });
+})();
+
+async function readData () {
+  // Ask user for username
+  let username = await new Promise((resolve) => {
+    rl.question('Enter username: ', (username) => {
+      resolve(username);
+    });
+  });
+
+  // Ask user for first name
+  let firstName = await new Promise((resolve) => {
+    rl.question('Enter first name: ', (firstName) => {
+      resolve(firstName);
+    });
+  });
+
+  // Ask user for last name
+  let lastName = await new Promise((resolve) => {
+    rl.question('Enter last name: ', (lastName) => {
+      resolve(lastName);
+    });
+  });
+
+  // Ask user for email
+  let email = await new Promise((resolve) => {
+    rl.question('Enter email: ', (email) => {
+      resolve(email);
+    });
+  });
+
+  // Ask user for password
+  let password = await new Promise((resolve) => {
+    rl.question('Enter password: ', (password) => {
+      resolve(password);
+    });
+  });
+
+  // We don't need the readline anymore
+  rl.close();
+
+  return {
+    username,
+    firstName,
+    lastName,
+    email,
+    password,
+  };
+}
