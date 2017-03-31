@@ -11,6 +11,7 @@
     "prebuild": "npm run clean",
     "test": "mocha --compilers js:babel-register",
     "lint": "eslint src test --fix",
+    "copyenvfile": "scripts/copy_env_file",
     "initdb": "scripts/init_db",
     "createadmin": "scripts/create_admin"
   },

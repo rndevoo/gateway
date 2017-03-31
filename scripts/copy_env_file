@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# The directory of this file
+CURRENT_DIR="$( builtin cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+PROJECT_ROOT_DIR="${CURRENT_DIR}/.."
+
+cp "${PROJECT_ROOT_DIR}/.env.template" "${PROJECT_ROOT_DIR}/.env"
