@@ -10,7 +10,9 @@
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "test": "mocha --compilers js:babel-register",
-    "lint": "eslint src test --fix"
+    "lint": "eslint src test --fix",
+    "initdb": "scripts/init_db",
+    "createadmin": "scripts/create_admin"
   },
   "repository": {
     "type": "git",
@@ -36,9 +38,11 @@
     "babel-cli": "^6.24.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
     "chai": "^3.5.0",
+    "dotenv": "^4.0.0",
     "eslint": "^3.18.0",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
+    "rimraf": "^2.6.1",
     "sinon": "^2.1.0"
   },
   "engines": {
