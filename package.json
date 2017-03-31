@@ -29,6 +29,7 @@
     "koa-bodyparser": "^4.2.0",
     "koa-jwt": "^3.1.0",
     "koa-logger": "^2.0.1",
+    "koa-router": "next",
     "pg": "^6.1.5"
   },
   "devDependencies": {
