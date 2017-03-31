@@ -7,7 +7,7 @@ CREATE TABLE users (
   password         varchar(512)    NOT NULL,
   is_active        boolean         NOT NULL DEFAULT FALSE,
   is_admin         boolean         NOT NULL DEFAULT FALSE,
-  created          timestamp       NOT NULL
+  created          timestamp       DEFAULT (now() at time zone 'utc')
 );
 
 CREATE TYPE gender_identity AS ENUM (
