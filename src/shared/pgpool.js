@@ -8,8 +8,8 @@ const config = {
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  max: MAX_POOL_CLIENTS,
-  idleTimeoutMillis: IDLE_TIMEOUT_MS,
+  max: process.env.MAX_POOL_CLIENTS,
+  idleTimeoutMillis: process.env.IDLE_TIMEOUT_MS,
 };
 
 export default new Pool(config);
