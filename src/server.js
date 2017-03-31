@@ -3,12 +3,11 @@
 import Koa from 'koa';
 import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
-import dotenv from 'dotenv';
 
 import router from './router/router';
 
 if (process.env.NODE_ENV != 'production') {
-  dotenv.load({ path: `${__dirname}/../.env` });
+  require('dotenv').load({ path: `${__dirname}/../.env` });
 }
 
 const app = new Koa();
