@@ -16,9 +16,12 @@ const { Admin } = require('./../src/apps/users/models/admin');
 (async function main () {
   let data = await readData();
 
-  Admin.create(data).then(() => {
+  try {
+    await Admin.create(data);
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
-  });
+  } catch (e) {
+    console.error('Something bad happened!', e);
+  }
 })();
 
 async function readData () {
