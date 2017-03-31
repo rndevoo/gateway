@@ -1,13 +1,14 @@
 #! /usr/bin/env node
 
+'use strict';
+
 // Allow me to require ES2015 modules
 require('babel-core/register');
 
 const readline = require('readline');
-const dotenv = require('dotenv');
 
 if (process.env.NODE_ENV != 'production') {
-  dotenv.load({ path: './../.env' });
+  require('dotenv').load({ path: `${__dirname}/../.env` });
 }
 
 const { Admin } = require('./../src/apps/users/models/admin');
