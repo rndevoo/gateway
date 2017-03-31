@@ -4,65 +4,44 @@
 require('babel-core/register');
 
 const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const dotenv = require('dotenv');
 
-const { User } = require('./../src/users/models');
+if (process.env.NODE_ENV != 'production') {
+  dotenv.load({ path: './../.env' });
+}
+
+const { Admin } = require('./../src/apps/users/models/admin');
 
 (async function main () {
   let data = await readData();
 
-  User.createAdmin(data).then(() => {
+  Admin.create(data).then(() => {
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
   });
 })();
 
 async function readData () {
-  // Ask for username
-  let username = await new Promise((resolve) => {
-    rl.question('Enter username: ', (username) => {
-      resolve(username);
-    });
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
   });
 
-  // Ask for first name
-  let firstName = await new Promise((resolve) => {
-    rl.question('Enter first name: ', (firstName) => {
-      resolve(firstName);
-    });
-  });
-
-  // Ask for last name
-  let lastName = await new Promise((resolve) => {
-    rl.question('Enter last name: ', (lastName) => {
-      resolve(lastName);
-    });
-  });
-
-  // Ask for email
-  let email = await new Promise((resolve) => {
-    rl.question('Enter email: ', (email) => {
-      resolve(email);
-    });
-  });
-
-  // Ask for password
-  let password = await new Promise((resolve) => {
-    rl.question('Enter password: ', (password) => {
-      resolve(password);
-    });
-  });
+  let data = {
+    username: await readValue('Enter username: ', rl),
+    firstName: await readValue('Enter first name: ', rl),
+    lastName: await readValue('Enter last name: ', rl),
+    email: await readValue('Enter email: ', rl),
+    password: await readValue('Enter password: ', rl),
+  };
 
   // We don't need the readline anymore
   rl.close();
 
-  return {
-    username,
-    firstName,
-    lastName,
-    email,
-    password,
-  };
+  return data;
+}
+
+function readValue (msg, rl) {
+  return new Promise((resolve) => {
+    rl.question(msg, (value) => resolve(value));
+  });
 }
