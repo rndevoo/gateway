@@ -1,14 +1,14 @@
 'use strict';
 
-import pg from 'pg';
+import Pool from 'pg-pool';
 
 const DATABASE_USER = 'diego';
 const DATABASE_NAME = 'letsmeet';
 const DATABASE_PASSWORD = 'asdf';
 const DATABASE_HOST = 'localhost';
-const DATABASE_PORT = '8081';
+const DATABASE_PORT = 5432;
 const MAX_POOL_CLIENTS = 10;
-const IDLE_TIMEOUT_MS = 30000;
+const IDLE_TIMEOUT_MS = 1000;
 
 const config = {
   user: process.env.DATABASE_USER || DATABASE_USER,
@@ -20,4 +20,4 @@ const config = {
   idleTimeoutMillis: IDLE_TIMEOUT_MS,
 };
 
-export default new pg.Pool(config);
+export default new Pool(config);
