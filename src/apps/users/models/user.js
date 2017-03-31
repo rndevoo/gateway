@@ -8,6 +8,17 @@ export class User {
   static async list () {
   }
 
+  static async retrieve (id) {
+    // TODO: Learn how to join tables and stuff
+    const sqlString = `
+    SELECT
+    `;
+
+    let result = await pool.query(sqlString, id);
+
+    return result.rows[0];
+  }
+
   static async create (data, { isAdmin = false }) {
     const SALT_ROUNDS = 10;
 
@@ -31,5 +42,17 @@ export class User {
     ];
 
     await pool.query(sqlString, sqlValues);
+  }
+
+  static async update (id, data) {
+  }
+
+  static async delete (id) {
+    // Why not a soft delete?
+    const sqlString = `
+    DELETE FROM users WHERE id = $1;
+    `;
+
+    await pool.query(sqlString, id);
   }
 }
