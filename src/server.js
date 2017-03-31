@@ -4,7 +4,7 @@ import Koa from 'koa';
 import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
 
-import router from './router';
+import router from './router/router';
 
 const app = new Koa();
 
@@ -14,8 +14,8 @@ app
   .use(logger())
   .use(bodyParser())
   .use(router.routes())
-  .use(router.allowedMethods());
+  .use(router.allowedMethods())
 
-app.listen(PORT, () => {
-  console.log(`LetsMeet server running on port: ${PORT}`);
-});
+  .listen(PORT, () => {
+    console.log(`LetsMeet server running on port: ${PORT}`);
+  });

@@ -1,6 +1,6 @@
 'use strict';
 
-import pool from './../db';
+import pool from './../shared/pgpool.js';
 
 export class User {
   static async list () {
