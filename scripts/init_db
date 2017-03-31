@@ -4,11 +4,13 @@
 CURRENT_DIR="$( builtin cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 PROJECT_ROOT_DIR="${CURRENT_DIR}/.."
 
+DATABASE_NAME="letsmeet"
+
 echo "Dropping letsmeet database..."
-dropdb --if-exists letsmeet
+dropdb --if-exists "${DATABASE_NAME}"
 
 echo "Creating letsmeet database..."
-createdb letsmeet
+createdb "${DATABASE_NAME}"
 
 echo "Creating types and tables..."
 psql letsmeet -f "${PROJECT_ROOT_DIR}/database/create_gender_identities_type.sql"
