@@ -3,7 +3,6 @@
 ----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS profiles CASCADE;
 
 CREATE TABLE users (
   id               bigserial       PRIMARY KEY,
@@ -16,6 +15,8 @@ CREATE TABLE users (
   is_admin         boolean         NOT NULL DEFAULT FALSE,
   created          timestamp       DEFAULT (now() at time zone 'utc')
 );
+
+DROP TABLE IF EXISTS profiles CASCADE;
 
 CREATE TABLE profiles (
   user_id          bigint          REFERENCES users ON DELETE CASCADE UNIQUE,
