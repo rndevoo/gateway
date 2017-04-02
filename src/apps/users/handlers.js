@@ -1,6 +1,9 @@
+/**
+ * @overview The user handlers.
+ */
 'use strict';
 
-import { User } from './models/user';
+import { User } from './models';
 
 export class UserHandlers {
   static async list (ctx) {
