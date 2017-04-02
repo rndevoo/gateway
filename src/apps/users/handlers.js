@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import { User } from './models';
+import { User } from './models/user';
 
 export class UserHandlers {
   static async list (ctx) {
