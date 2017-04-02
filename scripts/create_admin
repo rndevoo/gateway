@@ -13,8 +13,7 @@ const readline = require('readline');
 const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');
 
-const { Admin } = require('./../src/apps/users/models/admin');
-const { User } = require('./../src/apps/users/models/user');
+const { User } = require('./../src/apps/users/models');
 
 const optionDefinitions = [
   { name: 'nonadmin', alias: 'n', type: Boolean, defaultValue: false },
@@ -124,8 +123,10 @@ async function main () {
 
   let data = await readData(args);
 
+  const isAdmin = !args.nonadmin;
+
   try {
-    await Admin.create(data);
+    await User.create(data, { isAdmin });
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
     process.exit(0);
   } catch (e) {
