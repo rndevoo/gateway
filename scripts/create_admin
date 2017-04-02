@@ -19,6 +19,7 @@ const { Admin } = require('./../src/apps/users/models/admin');
   try {
     await Admin.create(data);
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
+    process.exit(0);
   } catch (e) {
     console.error('Something bad happened!', e);
   }
