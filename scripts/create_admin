@@ -13,7 +13,7 @@ const readline = require('readline');
 const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');
 
-const { User } = require('./../src/apps/users/models');
+const { User } = require('./../src/apps/users/models/user');
 
 const optionDefinitions = [
   { name: 'nonadmin', alias: 'n', type: Boolean, defaultValue: false },
