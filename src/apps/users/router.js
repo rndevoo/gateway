@@ -2,12 +2,15 @@
 
 import Router from 'koa-router';
 
-import { isAdmin } from './../../middlewares/permissions';
+import jwt from './../../middlewares/jwt';
+import { UserHandlers } from './handlers';
+import { isAdmin, isAdminOrSelf } from './../../middlewares/permissions';
 
 const router = new Router();
 
 router
-  .get('/')
-  .get('/:id');
+  .get('/', jwt, isAdmin, UserHandlers.list)
+  .get('/:id', UserHandlers.retrieve)
+  .delete('/:id', jwt, isAdminOrSelf, UserHandlers.delete);
 
 export default router;
