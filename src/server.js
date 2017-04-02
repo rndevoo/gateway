@@ -1,3 +1,7 @@
+/**
+ * @overview The server's entry point.
+ * @author Diego Stratta <strattadb@gmail.com>
+ */
 'use strict';
 
 import Koa from 'koa';
