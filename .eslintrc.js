@@ -5,12 +5,10 @@ module.exports = {
     "es6": true,
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module",
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-    },
   },
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
