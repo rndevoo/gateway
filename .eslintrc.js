@@ -21,6 +21,7 @@ module.exports = {
     "eol-last": ["error", "always"],
     "max-len": ["error", {
       "code": 80,
+      "ignoreComments": true,
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true,
       "ignoreRegExpLiterals": true,
