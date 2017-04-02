@@ -1,3 +1,6 @@
+/**
+ * @overview The authentication handlers.
+ */
 'use strict';
 
 import bcrypt from 'bcrypt';
