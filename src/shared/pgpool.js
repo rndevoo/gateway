@@ -12,4 +12,6 @@ const config = {
   idleTimeoutMillis: process.env.IDLE_TIMEOUT_MS,
 };
 
-export default new Pool(config);
+const pool = new Pool(config);
+
+export default pool;
