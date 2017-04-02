@@ -14,21 +14,23 @@ const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');
 
 const { Admin } = require('./../src/apps/users/models/admin');
+const { User } = require('./../src/apps/users/models/user');
 
 const optionDefinitions = [
+  { name: 'nonadmin', alias: 'n', type: Boolean, defaultValue: false },
   { name: 'username', alias: 'u', type: String },
   { name: 'first', alias: 'f', type: String },
   { name: 'last', alias: 'l', type: String },
   { name: 'email', alias: 'e', type: String },
   { name: 'password', alias: 'p', type: String },
-  { name: 'help', alias: 'h', type: Boolean, defaultOption: false },
+  { name: 'help', alias: 'h', type: Boolean, defaultValue: false },
 ];
 
 const usageSections = [
   {
     header: 'Create Admin',
     content: [
-      'Creates an admin user for LetsMeet.',
+      'Creates a user/admin user for LetsMeet.',
       'The data not provided through options will be asked interactively.',
     ],
   },
@@ -36,6 +38,7 @@ const usageSections = [
     header: 'Synopsis',
     content: [
       '$ npm run createadmin',
+      '$ npm run createadmin -- <option> <value>',
       '$ npm run createadmin -- [[bold]{-u} [underline]{username}] [[bold]{-f} [underline]{firstname}] ...',
       '$ npm run createadmin -- [bold]{--help}',
     ],
@@ -79,9 +82,31 @@ const usageSections = [
     header: 'Misc',
     optionList: [
       {
+        name: 'nonadmin',
+        alias: 'n',
+        description: 'Create a simple user.',
+      },
+      {
         name: 'help',
         alias: 'h',
         description: 'Print this usage guide.',
+      },
+    ],
+  },
+  {
+    header: 'Examples',
+    content: [
+      {
+        desc: '1. Create the admin interactively',
+        example: '$ npm run createadmin',
+      },
+      {
+        desc: '2. Set the username and the rest interactive',
+        example: '$ npm run createadmin -- --u strattadb',
+      },
+      {
+        desc: '3. Create a simple user (not an admin)',
+        example: '$ npm run createadmin -- --nonadmin',
       },
     ],
   },
