@@ -5,38 +5,122 @@
 // Allow me to require ES2015 modules
 require('babel-core/register');
 
-const readline = require('readline');
-
 if (process.env.NODE_ENV != 'production') {
   require('dotenv').load({ path: `${__dirname}/../.env` });
 }
 
+const readline = require('readline');
+const commandLineArgs = require('command-line-args');
+const getUsage = require('command-line-usage');
+
 const { Admin } = require('./../src/apps/users/models/admin');
 
-(async function main () {
-  let data = await readData();
+const optionDefinitions = [
+  { name: 'username', alias: 'u', type: String },
+  { name: 'first', alias: 'f', type: String },
+  { name: 'last', alias: 'l', type: String },
+  { name: 'email', alias: 'e', type: String },
+  { name: 'password', alias: 'p', type: String },
+  { name: 'help', alias: 'h', type: Boolean, defaultOption: false },
+];
+
+const usageSections = [
+  {
+    header: 'Create Admin',
+    content: [
+      'Creates an admin user for LetsMeet.',
+      'The data not provided through options will be asked interactively.',
+    ],
+  },
+  {
+    header: 'Synopsis',
+    content: [
+      '$ npm run createadmin',
+      '$ npm run createadmin -- [[bold]{-u} [underline]{username}] [[bold]{-f} [underline]{firstname}] ...',
+      '$ npm run createadmin -- [bold]{--help}',
+    ],
+  },
+  {
+    header: 'Options',
+    optionList: [
+      {
+        name: 'username',
+        alias: 'u',
+        typeLabel: '[underline]{string}',
+        description: 'The username of the admin.',
+      },
+      {
+        name: 'first',
+        alias: 'f',
+        typeLabel: '[underline]{string}',
+        description: 'The first name of the admin.',
+      },
+      {
+        name: 'last',
+        alias: 'l',
+        typeLabel: '[underline]{string}',
+        description: 'The last name of the admin.',
+      },
+      {
+        name: 'email',
+        alias: 'e',
+        typeLabel: '[underline]{string}',
+        description: 'The email of the admin.',
+      },
+      {
+        name: 'password',
+        alias: 'p',
+        typeLabel: '[underline]{string}',
+        description: 'The password of the admin.',
+      },
+    ],
+  },
+  {
+    header: 'Misc',
+    optionList: [
+      {
+        name: 'help',
+        alias: 'h',
+        description: 'Print this usage guide.',
+      },
+    ],
+  },
+];
+
+main();
+
+async function main () {
+  const args = commandLineArgs(optionDefinitions);
+
+  if (args.help) {
+    console.log(getUsage(usageSections));
+    return;
+  }
+
+  let data = await readData(args);
 
   try {
     await Admin.create(data);
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
     process.exit(0);
   } catch (e) {
-    console.error('Something bad happened!', e);
+    console.error(`Something bad happened!\n${e}`);
+    process.exit(1);
   }
-})();
+}
 
-async function readData () {
+async function readData (args) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
 
   let data = {
-    username: await readValue('Enter username: ', rl),
-    firstName: await readValue('Enter first name: ', rl),
-    lastName: await readValue('Enter last name: ', rl),
-    email: await readValue('Enter email: ', rl),
-    password: await readValue('Enter password: ', rl),
+    username: args.username ? args.username : await readValue('Enter username: ', rl),
+    firstName: args.first ? args.first : await readValue('Enter first name: ', rl),
+    lastName: args.last ? args.last : await readValue('Enter last name: ', rl),
+    email: args.email ? args.email : await readValue('Enter email: ', rl),
+    password: args.password ? args.password : await readValue('Enter password: ', rl),
   };
 
   // We don't need the readline anymore
