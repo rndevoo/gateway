@@ -3,12 +3,14 @@
 import Koa from 'koa';
 import logger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
-
-import router from './router/router';
+import dotenv from 'dotenv';
 
 if (process.env.NODE_ENV != 'production') {
-  require('dotenv').load({ path: `${__dirname}/../.env` });
+  dotenv.load({ path: `${__dirname}/../.env` });
 }
+
+// This is a hack due to node not supporting ES modules
+const router = require('./router/router').default;
 
 const app = new Koa();
 
