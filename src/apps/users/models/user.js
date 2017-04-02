@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 import pool from './../../../shared/pgpool';
 
 export class User {
-  static async list ({ profiles = false, preferences = false }) {
+  static async list ({ showProfile = false, showPreferences = false }) {
     const sqlJoinProfiles = `
     LEFT JOIN profiles ON users.id = profiles.user_id
     `;
@@ -17,25 +17,25 @@ export class User {
     const sqlString = `
     SELECT *
     FROM users
-    ${profiles ? sqlJoinProfiles : ''}
-    ${preferences ? sqlJoinPreferences : ''};
+    ${showProfile ? sqlJoinProfiles : ''}
+    ${showPreferences ? sqlJoinPreferences : ''};
     `;
 
     let result = await pool.query(sqlString);
 
-    return result;
+    return result.rows;
   }
 
-  static async retrieve (id) {
+  static async retrieve (getBy, value, fields = ['*']) {
     const sqlString = `
-    SELECT *
+    SELECT ${fields.join(', ')}
     FROM users
     LEFT JOIN profiles ON users.id = profiles.user_id
     LEFT JOIN user_preferences ON users.id = user_preferences.user_id
-    WHERE users.id = $1;
+    WHERE users.${getBy} = $1;
     `;
 
-    let result = await pool.query(sqlString, id);
+    let result = await pool.query(sqlString, [value]);
 
     return result.rows[0];
   }
@@ -69,14 +69,16 @@ export class User {
     // TODO
   }
 
-  static async delete (id) {
+  static async delete (getBy, value) {
     // Why not a soft delete?
     const sqlString = `
     DELETE
     FROM users
-    WHERE id = $1;
+    WHERE ${getBy} = $1;
     `;
 
-    await pool.query(sqlString, id);
+    const result = await pool.query(sqlString, [value]);
+    console.log(result);
+    return result.rowCount != 0;
   }
 }
