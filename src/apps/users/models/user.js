@@ -5,7 +5,7 @@
 
 import bcrypt from 'bcrypt';
 
-import pool from './../../../shared/pgpool';
+import pool from './../../../../lib/pgpool';
 
 export class User {
   /**
@@ -72,12 +72,13 @@ export class User {
    * @param {String} data.email - The user's email.
    * @param {String} data.password - The user's plaintext password.
    *
-   * @param {Object} options - Object containing options.
-   * @param {Boolean} [options.isAdmin=false] - Whether to create an admin user or not.
+   * @param {Boolean} [isAdmin=false] - Whether to create an admin user or not.
    *
-   * @returns {Boolean} Returns true if succeeded and false otherwise.
+   * @throws - If arguments are invalid or duplicate keys.
+   *
+   * @returns {Object} The created user's data.
    */
-  static async create (data, { isAdmin = false }) {
+  static async create (data, isAdmin = false) {
     const SALT_ROUNDS = 10;
 
     // If we're creating an admin make it immediately active
@@ -86,7 +87,8 @@ export class User {
 
     const sqlString = `
     INSERT INTO users (username, first_name, last_name, email, password, is_active, is_admin)
-    VALUES ($1, $2, $3, $4, $5, $6, $7);
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *;
     `;
 
     const sqlValues = [
@@ -99,11 +101,38 @@ export class User {
       isAdmin,
     ];
 
-    await pool.query(sqlString, sqlValues);
+    let result;
+    try {
+      result = await pool.query(sqlString, sqlValues);
+    } catch (e) {
+    }
+
+    return result.rows[0];
   }
 
+  /**
+   * Updates a user.
+   *
+   * @param {Number} id - The user's id.
+   * @param {Object} data - The object containing the fields and values to be updated.
+   *
+   * @returns {Boolean} true if succeeded and false otherwise.
+   */
   static async update (id, data) {
-    // TODO
+    const sqlUpdateString = Object.keys(data).map((key) => {
+      return `${key} = ${data[key]}`;
+    }).join(', ');
+
+    const sqlString = `
+    UPDATE users
+    SET ${sqlUpdateString}
+    LEFT JOIN profiles ON users.id = profiles.user_id
+    LEFT JOIN user_preferences ON users.id = user_preferences.user_id
+    WHERE id = $1;
+    `;
+
+    const result = await pool.query(sqlString, [id]);
+    return result.rowCount != 0;
   }
 
   /**
