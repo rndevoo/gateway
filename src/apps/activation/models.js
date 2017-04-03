@@ -37,6 +37,22 @@ export class ActivationToken {
   }
 
   /**
+   * Returns the token with user_id = id
+   *
+   * @param {Number} userId - The user's id.
+   */
+  static async retrieve (userId) {
+    const sqlString = `
+    SELECT *
+    FROM activation_tokens
+    WHERE user_id = $1;
+    `;
+
+    const result = await pool.query(sqlString, [userId]);
+    return result.rows[0];
+  }
+
+  /**
    * Returns the user id based on the activation token provided.
    *
    * @param {String} token - The user activation token.
