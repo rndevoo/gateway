@@ -37,6 +37,7 @@ export class User {
    * @returns {Object} The user object.
    */
   static async retrieve (getBy, value, fields = ['*']) {
+    // TODO: change to pg parameters below
     const sqlString = `
     SELECT ${fields.join(', ')}
     FROM users
@@ -67,7 +68,7 @@ export class User {
    * @returns {Object} The created user's data.
    */
   static async create (data, isAdmin = false) {
-    const SALT_ROUNDS = 10;
+    const SALT_ROUNDS = process.env.PASS_SALT_ROUNDS;
 
     // If we're creating an admin make it immediately active
     const isActive = isAdmin;
