@@ -9,6 +9,7 @@
     "serve:prod": "node dist/server.js",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
+    "preserve:prod": "npm run build",
     "test": "mocha --compilers js:babel-register",
     "lint": "eslint src test --fix",
     "copyenvfile": "scripts/gen_env_file",
