@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import pool from './../../../../lib/pgpool';
+import pool from './../../../lib/pgpool';
 
 export class Profile {
   /**

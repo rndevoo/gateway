@@ -7,7 +7,7 @@ import { User } from './../users/models/user';
 import { Profile } from './../users/models/profile';
 import { Preferences } from './../users/models/preferences';
 import { ActivationToken } from './models';
-import { sendActivationMail } from './../../../lib/mails';
+import { sendActivationMail } from './../../lib/mails';
 
 export class ActivationHandlers {
   static async activate (ctx) {

@@ -3,8 +3,8 @@
  */
 'use strict';
 
-import pool from './../../../../lib/pgpool';
-import { getSqlUpdateStringAndValues } from './../../../../lib/utils';
+import pool from './../../../lib/pgpool';
+import { getSqlUpdateStringAndValues } from './../../../lib/utils';
 
 export class Preferences {
   /**

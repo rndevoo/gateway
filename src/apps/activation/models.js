@@ -5,7 +5,7 @@
 
 import crypto from 'crypto';
 
-import pool from './../../../lib/pgpool';
+import pool from './../../lib/pgpool';
 
 export class ActivationToken {
   /**

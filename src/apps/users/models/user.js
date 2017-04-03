@@ -5,11 +5,11 @@
 
 import bcrypt from 'bcrypt';
 
-import pool from './../../../../lib/pgpool';
+import pool from './../../../lib/pgpool';
 import {
   getSqlUpdateStringAndValues,
   getSqlSelectFieldsString,
-} from './../../../../lib/utils';
+} from './../../../lib/utils';
 
 export class User {
   /**
