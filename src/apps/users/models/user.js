@@ -6,32 +6,20 @@
 import bcrypt from 'bcrypt';
 
 import pool from './../../../../lib/pgpool';
+import { getSqlUpdateStringAndValues } from './../../../../lib/utils';
 
 export class User {
   /**
-   * Returns the complete list of users of LetsMeet.
-   * This method is only allowed to admins.
-   *
-   * @param {Object} options - Object containing options.
-   * @param {Boolean} [options.showProfile=false] - Whether to include profile information in the list or not.
-   * @param {Boolean} [options.showPreferences=false] - Whether to include user preferences in the list or not.
+   * Returns the complete list of users.
    *
    * @returns {Array} List of users.
    */
-  static async list ({ showProfile = false, showPreferences = false }) {
-    const sqlJoinProfiles = `
-    LEFT JOIN profiles ON users.id = profiles.user_id
-    `;
-
-    const sqlJoinPreferences = `
-    LEFT JOIN user_preferences ON users.id = user_preferences.user_id
-    `;
-
+  static async list () {
     const sqlString = `
     SELECT *
     FROM users
-    ${showProfile ? sqlJoinProfiles : ''}
-    ${showPreferences ? sqlJoinPreferences : ''};
+    LEFT JOIN profiles ON users.id = profiles.user_id
+    LEFT JOIN user_preferences ON users.id = user_preferences.user_id
     `;
 
     let result = await pool.query(sqlString);
@@ -119,19 +107,21 @@ export class User {
    * @returns {Boolean} true if succeeded and false otherwise.
    */
   static async update (id, data) {
-    const sqlUpdateString = Object.keys(data).map((key) => {
-      return `${key} = ${data[key]}`;
-    }).join(', ');
+    const startParametersFrom = 1;
+    let { sqlUpdateString, sqlValues } = getSqlUpdateStringAndValues(
+      data,
+      startParametersFrom,
+    );
 
     const sqlString = `
-    UPDATE users
+    UPDATE users u
     SET ${sqlUpdateString}
-    LEFT JOIN profiles ON users.id = profiles.user_id
-    LEFT JOIN user_preferences ON users.id = user_preferences.user_id
-    WHERE id = $1;
+    WHERE u.id = $1;
     `;
 
-    const result = await pool.query(sqlString, [id]);
+    sqlValues = [id, ...sqlValues];
+
+    const result = await pool.query(sqlString, sqlValues);
     return result.rowCount != 0;
   }
 
