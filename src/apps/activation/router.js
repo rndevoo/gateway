@@ -5,12 +5,14 @@
 
 import Router from 'koa-router';
 
+import jwt from './../../middlewares/jwt';
+
 import { ActivationHandlers } from './handlers';
 
 const router = new Router();
 
 router
-  .get('/send/:id', ActivationHandlers.sendEmail)
+  .get('/resend/', jwt, ActivationHandlers.resendEmail)
   .get('/:token', ActivationHandlers.activate);
 
 export default router;
