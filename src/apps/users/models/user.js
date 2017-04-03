@@ -6,7 +6,10 @@
 import bcrypt from 'bcrypt';
 
 import pool from './../../../../lib/pgpool';
-import { getSqlUpdateStringAndValues } from './../../../../lib/utils';
+import {
+  getSqlUpdateStringAndValues,
+  getSqlSelectFieldsString,
+} from './../../../../lib/utils';
 
 export class User {
   /**
@@ -37,16 +40,23 @@ export class User {
    * @returns {Object} The user object.
    */
   static async retrieve (getBy, value, fields = ['*']) {
-    // TODO: change to pg parameters below
+    const startParametersFrom = 2;
+    const sqlSelectString = getSqlSelectFieldsString(
+      fields,
+      startParametersFrom,
+    );
+
     const sqlString = `
-    SELECT ${fields.join(', ')}
+    SELECT ${sqlSelectString}
     FROM users
     LEFT JOIN profiles ON users.id = profiles.user_id
     LEFT JOIN user_preferences ON users.id = user_preferences.user_id
     WHERE users.${getBy} = $1;
     `;
 
-    let result = await pool.query(sqlString, [value]);
+    const sqlValues = [value, ...fields];
+
+    let result = await pool.query(sqlString, sqlValues);
 
     return result.rows[0];
   }
@@ -108,7 +118,7 @@ export class User {
    * @returns {Boolean} true if succeeded and false otherwise.
    */
   static async update (id, data) {
-    const startParametersFrom = 1;
+    const startParametersFrom = 2;
     let { sqlUpdateString, sqlValues } = getSqlUpdateStringAndValues(
       data,
       startParametersFrom,
