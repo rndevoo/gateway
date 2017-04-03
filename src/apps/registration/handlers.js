@@ -14,7 +14,7 @@ export class RegistrationHandlers {
   static async registrate (ctx) {
     const data = ctx.request.body;
 
-    // TODO: validate data
+    // TODO: Validate input
 
     const user = await User.create(data);
     const newToken = await ActivationToken.create(user.id, user.email);
