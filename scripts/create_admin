@@ -126,7 +126,7 @@ async function main () {
   const isAdmin = !args.nonadmin;
 
   try {
-    await User.create(data, { isAdmin });
+    await User.create(data, isAdmin);
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
     process.exit(0);
   } catch (e) {
