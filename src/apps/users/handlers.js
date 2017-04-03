@@ -19,6 +19,7 @@ export class UserHandlers {
     const fields = [
       'username',
       'first_name',
+      'bio',
       'birth_date',
       'gender_identity',
     ];
