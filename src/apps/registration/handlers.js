@@ -3,8 +3,6 @@
  */
 'use strict';
 
-import validator from 'validator';
-
 import { sendActivationMail } from './../../lib/mails';
 
 import { User } from './../users/models/user';

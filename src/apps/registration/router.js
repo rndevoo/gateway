@@ -5,11 +5,12 @@
 
 import Router from 'koa-router';
 
+import { registrationValidator } from './validators';
 import { RegistrationHandlers } from './handlers';
 
 const router = new Router();
 
 router
-  .post('/', RegistrationHandlers.registrate);
+  .post('/', registrationValidator, RegistrationHandlers.registrate);
 
 export default router;
