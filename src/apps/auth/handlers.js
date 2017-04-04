@@ -11,7 +11,7 @@ import { User } from './../users/models/user';
 
 export class AuthHandlers {
   static async login (ctx) {
-    const { username, password } = ctx.req.body;
+    const { username, password } = ctx.request.body;
 
     if (validator.isEmpty(username) || validator.isEmpty(password)) {
       ctx.throw(400);
@@ -40,7 +40,7 @@ export class AuthHandlers {
 
   static async password (ctx) {
     const { id: userId } = ctx.state.user;
-    const { oldPass, newPass, newPassRepeat } = ctx.req.body;
+    const { oldPass, newPass, newPassRepeat } = ctx.request.body;
 
     const SALT_ROUNDS = process.env.PASS_SALT_ROUNDS;
 
