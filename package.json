@@ -11,6 +11,8 @@
     "prebuild": "npm run clean",
     "preserve:prod": "npm run build",
     "test": "mocha --compilers js:babel-register",
+    "test:unit": "",
+    "test:integration": "",
     "lint": "eslint src test --fix",
     "copyenvfile": "scripts/gen_env_file",
     "initdb": "scripts/init_db",
