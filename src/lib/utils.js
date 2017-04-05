@@ -3,40 +3,21 @@
  */
 'use strict';
 
-/**
- * Returns the string and array of parameters to pass to Postgres.
- *
- * @param {Object} data - The data to be processed.
- * @param {Number} startParametersFrom - Start enumarating parameters from this number.
- *
- * @returns {Object} - Object containing the string and array of parameters.
- */
-export function getSqlUpdateStringAndValues (data, startParametersFrom) {
-  const dataObjectKeys = Object.keys(data);
-
-  let sqlUpdateString = dataObjectKeys.map((key, index) => {
-    let parameterNumber = startParametersFrom + index;
-    return `${key} = $${parameterNumber}`;
-  }).join(', ');
-
-  let sqlValues = dataObjectKeys.map((key) => data[key]);
-
-  return { sqlUpdateString, sqlValues };
-}
+import crypto from 'crypto';
 
 /**
- * Returns the string of parameters to pass to Postgres.
+ * @overview Generates a random hash to use as an activation token.
  *
- * @param {String[]} fields - The fields to be selected.
- * @param {Number} startParametersFrom - Start enumarating parameters from this number.
- *
- * @returns {String} The string of Postgres parameters.
+ * @returns {String} The activation token.
  */
-export function getSqlSelectFieldsString (fields, startParametersFrom) {
-  let sqlSelectString = fields.map((field, index) => {
-    let parameterNumber = startParametersFrom + index;
-    return `$${parameterNumber}`;
-  }).join(', ');
+export function genActivationToken () {
+  const HASH_ALGORITHM = 'sha256';
+  const RANDOM_BYTES = crypto.randomBytes(64);
+  const ENCODING = 'hex';
 
-  return sqlSelectString;
+  const hash = crypto.createHash(HASH_ALGORITHM);
+
+  const token = hash.update(RANDOM_BYTES).digest(ENCODING);
+
+  return token;
 }
