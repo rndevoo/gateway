@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "build": "babel src -d dist",
-    "serve:dev": "nodemon src/server.js --exec babel-node",
+    "serve:dev": "nodemon index.js --exec babel-node",
     "serve:prod": "node dist/server.js",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
@@ -15,7 +15,6 @@
     "test:integration": "",
     "lint": "eslint src test --fix",
     "copyenvfile": "scripts/gen_env_file",
-    "initdb": "scripts/init_db",
     "createadmin": "scripts/create_admin"
   },
   "repository": {
@@ -38,8 +37,8 @@
     "koa-jwt": "^3.2.1",
     "koa-logger": "^2.0.1",
     "koa-router": "next",
+    "mongoose": "^4.9.3",
     "nodemailer": "^3.1.8",
-    "pg": "^6.1.5",
     "validator": "^7.0.0"
   },
   "devDependencies": {
