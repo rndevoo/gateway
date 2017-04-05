@@ -1,34 +1,24 @@
 /**
- * @overview The actions of the Preferences model.
+ * @overview The UserPreferences model.
  */
 'use strict';
 
-import pool from './../../../lib/pgpool';
-import { getSqlUpdateStringAndValues } from './../../../lib/utils';
+import mongoose from 'mongoose';
 
-export class Preferences {
-  /**
-   * Updates the preferences of a user.
-   *
-   * @param {Number} userId - The user's id.
-   * @param {Object} data - The data to update the preferences with.
-   */
-  static async update (userId, data) {
-    const startParametersFrom = 1;
-    let { sqlUpdateString, sqlValues } = getSqlUpdateStringAndValues(
-      data,
-      startParametersFrom,
-    );
+import db from './../../../config/db';
 
-    const sqlString = `
-    UPDATE user_preferences up
-    SET ${sqlUpdateString}
-    WHERE up.user_id = $1;
-    `;
+const Schema = mongoose.Schema;;
 
-    sqlValues = [userId, ...sqlValues];
+const UserPreferencesSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    index: true,
+    unique: true,
+    required: true,
+  },
+});
 
-    const result = await pool.query(sqlString, sqlValues);
-    return result.rowCount != 0;
-  }
-}
+const UserPreferences = db.model('UserPreferences', UserPreferencesSchema);
+
+export { UserPreferences };

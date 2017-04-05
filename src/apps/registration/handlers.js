@@ -3,6 +3,8 @@
  */
 'use strict';
 
+import bcrypt from 'bcrypt';
+
 import { sendActivationMail } from './../../lib/mails';
 
 import { User } from './../users/models/user';
@@ -10,14 +12,18 @@ import { ActivationToken } from './../activation/models';
 
 export class RegistrationHandlers {
   static async registrate (ctx) {
+    const SALT_ROUNDS = parseInt(process.env.PASS_SALT_ROUNDS, 10);
     const data = ctx.request.body;
 
-    // TODO: Validate input
+    data.password = await bcrypt.hash(data.password, SALT_ROUNDS);
 
-    const user = await User.create(data);
-    const newToken = await ActivationToken.create(user.id, user.email);
+    const user = new User(data);
+    await user.save();
 
-    sendActivationMail(user.email, newToken);
+    const token = new ActivationToken({ user: user._id });
+    await token.save();
+
+    sendActivationMail(user, token.token);
 
     ctx.status = 201;
   }

@@ -5,7 +5,6 @@
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import validator from 'validator';
 
 import { User } from './../users/models/user';
 
@@ -13,11 +12,12 @@ export class AuthHandlers {
   static async login (ctx) {
     const { username, password } = ctx.request.body;
 
-    if (validator.isEmpty(username) || validator.isEmpty(password)) {
+    const user = await User.findOne({ username });
+
+    if (!user) {
       ctx.throw(400);
     }
 
-    const user = await User.retrieve('username', username);
     const passwordMatches = await bcrypt.compare(password, user.password);
 
     if (!passwordMatches) {
@@ -43,11 +43,6 @@ export class AuthHandlers {
     const { oldPass, newPass, newPassRepeat } = ctx.request.body;
 
     const SALT_ROUNDS = process.env.PASS_SALT_ROUNDS;
-
-    if (validator.isEmpty(newPass)
-    || !validator.equals(newPass, newPassRepeat)) {
-      ctx.throw(400);
-    }
 
     const { password } = await User.retrieve('id', userId, ['password']);
 

@@ -7,18 +7,14 @@ import { User } from './models/user';
 
 export class UserHandlers {
   static async list (ctx) {
-    const options = {
-      showProfile: ctx.query.show_profile,
-      showPreferences: ctx.query.show_preferences,
-    };
-    ctx.body = await User.list(options);
+    ctx.body = await User.find();
   }
 
   static async retrieve (ctx) {
     const { id } = ctx.params;
     const fields = [
       'username',
-      'first_name',
+      'firstName',
       'bio',
       'birth_date',
       'gender_identity',
