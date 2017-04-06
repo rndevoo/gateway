@@ -123,10 +123,10 @@ async function main () {
 
   let data = await readData(args);
 
-  const isAdmin = !args.nonadmin;
+  data.isAdmin = !args.nonadmin;
 
   try {
-    await User.create(data, isAdmin);
+    await User.create(data);
     console.log(`Admin created successfully!\nWelcome, ${data.firstName}!`);
     process.exit(0);
   } catch (e) {
