@@ -1,3 +1,7 @@
+/**
+ * @overview Here we set the JWT secret and export the middleware ready
+ * to be used.
+ */
 'use strict';
 
 import jwt from 'koa-jwt';

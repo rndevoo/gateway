@@ -6,7 +6,11 @@
 import crypto from 'crypto';
 
 /**
- * @overview Generates a random hash to use as an activation token.
+ * @function
+ * @name genActivationToken
+ *
+ * @description
+ * Generates a random hash to use as an activation token.
  *
  * @returns {String} The activation token.
  */

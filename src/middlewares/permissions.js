@@ -5,12 +5,19 @@ export async function isAdminOrSelf (ctx, next) {
   return next();
 }
 
+/**
+ * @function
+ * @name isAdmin
+ *
+ * @description
+ * Middleware to check if given user is admin or not.
+ */
 export async function isAdmin (ctx, next) {
-  const isAdmin = ctx.state.user.is_admin;
+  const isAdmin = ctx.state.user.isAdmin;
   if (isAdmin) {
     return next();
   } else {
-    ctx.status = 401;
+    ctx.throw(401);
   }
 }
 
