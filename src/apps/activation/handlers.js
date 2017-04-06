@@ -11,22 +11,22 @@ import { sendActivationMail } from './../../lib/mails';
 
 export class ActivationHandlers {
   static async activate (ctx) {
-    const { activation_token: token } = ctx.query;
+    const { activation_token: queryToken } = ctx.query;
 
-    const { userId } = await ActivationToken
-      .findOne({ token })
-      .select({ userId: 1 });
+    const token = await ActivationToken
+      .findOne({ token: queryToken })
+      .select({ user: 1 });
 
-    if (!userId) {
+    if (!token) {
       ctx.throw(404);
     }
 
     try {
       await Promise.all([
-        User.update({ _id: userId }, { $set: { isActive: true }}),
-        Profile.create({ userId }),
-        UserPreferences.create({ userId }),
-        ActivationToken.deleteOne({ token }),
+        User.update({ _id: token.user }, { $set: { isActive: true }}),
+        Profile.create({ user: token.user }),
+        UserPreferences.create({ user: token.user }),
+        ActivationToken.deleteOne({ token: queryToken }),
       ]);
     } catch (e) {
       ctx.throw(500);

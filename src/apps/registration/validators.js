@@ -28,5 +28,5 @@ export async function registrationValidator (ctx, next) {
     ctx.throw(400);
   }
 
-  await next();
+  return next();
 }
