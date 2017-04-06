@@ -5,38 +5,43 @@
 
 import { User } from './../users/models/user';
 import { Profile } from './../users/models/profile';
-import { Preferences } from './../users/models/preferences';
-import { ActivationToken } from './models';
+import { UserPreferences } from './../users/models/userPreferences';
+import { ActivationToken } from './models/activationToken';
 import { sendActivationMail } from './../../lib/mails';
 
 export class ActivationHandlers {
   static async activate (ctx) {
-    const { token } = ctx.params;
+    const { activation_token: token } = ctx.query;
 
-    let userId;
-    try {
-      userId = await ActivationToken.getUserId(token);
-    } catch (e) {
-      ctx.status = 400;
-      return;
+    const { userId } = await ActivationToken
+      .findOne({ token })
+      .select({ userId: 1 });
+
+    if (!userId) {
+      ctx.throw(404);
     }
 
-    await Promise.all([
-      User.update(userId, { is_active: true }),
-      Profile.create(userId),
-      Preferences.create(userId),
-    ]);
-
-    await ActivationToken.delete(token);
+    try {
+      await Promise.all([
+        User.update({ _id: userId }, { $set: { isActive: true }}),
+        Profile.create({ userId }),
+        UserPreferences.create({ userId }),
+        ActivationToken.deleteOne({ token }),
+      ]);
+    } catch (e) {
+      ctx.throw(500);
+    }
 
     ctx.status = 200;
   }
 
   static async resendEmail (ctx) {
     const { user } = ctx.state;
-    console.log(typeof user.id);
-    const { token } = await ActivationToken.retrieve(user.id);
-    await sendActivationMail(user.email, token);
+    const { token } = await ActivationToken
+      .findOne({ userId: user.id })
+      .select({ token: 1 });
+
+    await sendActivationMail(user, token);
 
     ctx.status = 202;
   }

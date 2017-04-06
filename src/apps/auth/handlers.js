@@ -12,25 +12,32 @@ export class AuthHandlers {
   static async login (ctx) {
     const { username, password } = ctx.request.body;
 
-    const user = await User.findOne({ username });
+    let user = await User.findOne({ username });
 
-    if (!user) {
+    if (user) {
+      user = user.toObject();
+    } else {
       ctx.throw(400);
     }
 
+    // Check if password matches record in database
     const passwordMatches = await bcrypt.compare(password, user.password);
 
     if (!passwordMatches) {
       ctx.throw(400);
     }
 
+    // JWT constants
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES_IN = '2 days';
 
-    // Don't send the hashed password.
-    delete user.password;
+    // JWT payload
+    const jwtPayload = { name: user.firstName, isAdmin: user.isAdmin };
+    const jwtOptions = { expiresIn: JWT_EXPIRES_IN, issuer: 'LetsMeet' };
+    const token = jwt.sign(jwtPayload, JWT_SECRET, jwtOptions);
 
-    const token = jwt.sign(user, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+    // We don't want to send back the hashed password
+    delete user.password;
     ctx.body = { token, user };
   }
 

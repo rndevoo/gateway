@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 import { sendActivationMail } from './../../lib/mails';
 
 import { User } from './../users/models/user';
-import { ActivationToken } from './../activation/models';
+import { ActivationToken } from './../activation/models/activationToken';
 
 export class RegistrationHandlers {
   static async registrate (ctx) {
@@ -20,7 +20,7 @@ export class RegistrationHandlers {
     const user = new User(data);
     await user.save();
 
-    const token = new ActivationToken({ user: user._id });
+    const token = new ActivationToken({ userId: user._id });
     await token.save();
 
     sendActivationMail(user, token.token);

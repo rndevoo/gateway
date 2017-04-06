@@ -6,33 +6,56 @@
 import { User } from './models/user';
 
 export class UserHandlers {
+  /**
+   * @name list
+   * @method
+   *
+   * @description
+   * Sends the list of users.
+   */
   static async list (ctx) {
     ctx.body = await User.find();
   }
 
+  /**
+   * @name retrieve
+   * @method
+   *
+   * @description
+   * Sends the requested user's public information.
+   */
   static async retrieve (ctx) {
     const { id } = ctx.params;
-    const fields = [
-      'username',
-      'firstName',
-      'bio',
-      'birth_date',
-      'gender_identity',
-    ];
-    const result = await User.retrieve('id', id, fields);
+    const user = await User
+      .findOne({ _id: id })
+      .populate('profile')
+      .select({
+        firstName: 1,
+        username: 1,
+        bio: 1,
+        birthDate: 1,
+      });
 
-    if (!result) {
-      ctx.status = 404;
-      return;
+    if (!user) {
+      ctx.throw(404);
     }
 
-    ctx.body = result;
+    ctx.body = user.toObject;
   }
 
+  /**
+   * @name delete
+   * @method
+   *
+   * @description
+   * Deletes the requested user.
+   */
   static async delete (ctx) {
     const { id } = ctx.params;
-    const success = await User.delete('id', id);
+    const response = await User.deleteOne({ _id: id });
 
-    ctx.status = success ? 202 : 404;
+    if (response.deletedCount != 1) {
+      ctx.throw(404);
+    }
   }
 }

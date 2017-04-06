@@ -5,8 +5,8 @@
 
 import mongoose from 'mongoose';
 
-import db from './../../config/db';
-import { genActivationToken } from './../../lib/utils';
+import db from './../../../config/db';
+import { genActivationToken } from './../../../lib/utils';
 
 const Schema = mongoose.Schema;
 

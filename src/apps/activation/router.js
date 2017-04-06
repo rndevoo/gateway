@@ -13,6 +13,6 @@ const router = new Router();
 
 router
   .get('/resend/', jwt, ActivationHandlers.resendEmail)
-  .get('/:token', ActivationHandlers.activate);
+  .get('/', ActivationHandlers.activate);
 
 export default router;
