@@ -3,6 +3,8 @@
  */
 'use strict';
 
+import Boom from 'boom';
+
 import { User } from './../users/models/user';
 import { UserPreferences } from './../users/models/userPreferences';
 
@@ -16,7 +18,7 @@ export class UserHandlers {
    */
   static async detail (ctx) {
     const { id } = ctx.state.user;
-    const fields = ctx.state.fields || {};
+    const fields = ctx.state.fields;
 
     let userDoc = await User
       .findOne({ _id: id })

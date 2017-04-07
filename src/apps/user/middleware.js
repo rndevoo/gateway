@@ -3,7 +3,8 @@
  */
 'use strict';
 
-import { validateFieldsQueryAndGetObject } from './../../lib/queryValidators';
+import { validateFieldsArray } from './../../lib/queryValidators';
+import { getFieldsObject } from './../../lib/utils';
 
 export class UserValidators {
   static async detailFields (ctx, next) {
@@ -17,14 +18,13 @@ export class UserValidators {
       'active',
     ];
 
-    let { fields: fieldsQuery } = ctx.query;
+    const fieldsArray = ctx.state.query.fields;
 
-    let fields;
-    try {
-      fields = await validateFieldsQueryAndGetObject(fieldsQuery, validFields);
-    } catch (e) {
+    if (!validateFieldsArray(fieldsArray, validFields)) {
       ctx.throw(400);
     }
+
+    const fields = getFieldsObject(fieldsArray);
 
     // Pass the object of fields in the context.
     ctx.state.fields = fields;
