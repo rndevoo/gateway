@@ -25,3 +25,23 @@ export function genActivationToken () {
 
   return token;
 }
+
+/**
+ * @name getFieldsObject
+ * @function
+ *
+ * @description
+ * Returns an object of fields ready to be passed to Mongoose's .select().
+ *
+ * @param {String[]} [fieldsArray] - The array of fields.
+ *
+ * @returns {Object} The object to be passed. E.g., { username: 1 }
+ */
+export function getFieldsObject (fieldsArray = []) {
+  let fields = {};
+  fieldsArray.forEach((field) => {
+    fields[field] = 1;
+  });
+
+  return fields;
+}
