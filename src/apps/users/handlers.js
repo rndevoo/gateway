@@ -1,11 +1,16 @@
 /**
- * @overview The user handlers.
+ * @overview The users handlers.
  */
 'use strict';
 
-import { User } from './models/user';
+import bcrypt from 'bcrypt';
 
-export class UserHandlers {
+import { sendActivationMail } from './../../lib/mails';
+
+import { User } from './models/user';
+import { ActivationToken } from './../activation/models/activationToken';
+
+export class UsersHandlers {
   /**
    * @name list
    * @method
@@ -18,29 +23,45 @@ export class UserHandlers {
   }
 
   /**
-   * @name retrieve
+   * @name detail
    * @method
    *
    * @description
    * Sends the requested user's public information.
    */
-  static async retrieve (ctx) {
+  static async detail (ctx) {
     const { id } = ctx.params;
+    const fields = ctx.state.fields;
+
     const user = await User
       .findOne({ _id: id })
       .populate('profile')
-      .select({
-        firstName: 1,
-        username: 1,
-        bio: 1,
-        birthDate: 1,
-      });
+      .select(fields);
 
     if (!user) {
       ctx.throw(404);
     }
 
-    ctx.body = user.toObject;
+    ctx.body = user.toObject();
+  }
+
+  /**
+   * @name create
+   * @method
+   *
+   * @description
+   * Creates and saves a new user and activation token.
+   * Sends an email to the user with a link to verify his email.
+   */
+  static async create (ctx) {
+    const data = ctx.request.body;
+
+    const user = await User.create(data);
+    const token = await ActivationToken.create({ user: user._id });
+
+    sendActivationMail(user, token.token);
+
+    ctx.status = 201;
   }
 
   /**

@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 
 import db from './../../../config/db';
 
-const Schema = mongoose.Schema;;
+const Schema = mongoose.Schema;
 
 const UserPreferencesSchema = new Schema({
   user: {

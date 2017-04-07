@@ -3,6 +3,7 @@
  */
 'use strict';
 
+import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 
 import db from './../../../config/db';
@@ -44,6 +45,7 @@ const UserSchema = new Schema({
     type: String,
     maxlength: 128,
     required: true,
+    select: false,
   },
   active: {
     type: Boolean,
@@ -61,15 +63,53 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  profile: {
-    type: Schema.Types.ObjectId,
-    ref: 'Profile',
+  bio: {
+    type: String,
+    maxlength: 512,
+    trim: true,
   },
+  birthDate: Date,
   preferences: {
     type: Schema.Types.ObjectId,
     ref: 'UserPreferences',
   },
 });
+
+const SALT_ROUNDS = parseInt(process.env.PASS_SALT_ROUNDS, 10);
+
+/**
+ * @function
+ *
+ * @description
+ * Pre save hook for the user model.
+ * Checks if password was modified and if so, hashes it (bcrypt).
+ */
+UserSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+
+  this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
+  return next();
+});
+
+/**
+ * @function
+ *
+ * @description
+ * Compares a plaintext password with the hashed one stored in the database.
+ *
+ * @param {String} password - The plaintext password to compare.
+ *
+ * @returns {Boolean} True if they match, false otherwise.
+ */
+UserSchema.methods.comparePassword = async function (password) {
+  const storedPassword = this.password;
+  console.log(storedPassword)
+  const isCorrect = await bcrypt.compare(password, storedPassword);
+
+  return isCorrect;
+};
 
 const User = db.model('User', UserSchema);
 
