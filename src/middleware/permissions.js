@@ -1,3 +1,6 @@
+/**
+ * @overview Permissions as middleware.
+ */
 'use strict';
 
 export async function isAdminOrSelf (ctx, next) {

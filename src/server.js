@@ -18,6 +18,8 @@ import bodyParser from 'koa-bodyparser';
 import logger from './config/winston';
 
 import { default as db, mongoConnectionString } from './config/db';
+import queryParser from './middleware/qs';
+import errorHandler from './middleware/errorHandler';
 import router from './router/router';
 
 // Connect to the MongoDB database.
@@ -30,7 +32,9 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Plug in the middleware.
 app
+  .use(errorHandler())
   .use(koaLogger())
+  .use(queryParser())
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods());
