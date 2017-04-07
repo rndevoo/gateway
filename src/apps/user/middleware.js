@@ -3,6 +3,8 @@
  */
 'use strict';
 
+import Boom from 'boom';
+
 import { validateFieldsArray } from './../../lib/queryValidators';
 import { getFieldsObject } from './../../lib/utils';
 
@@ -21,9 +23,8 @@ export class UserValidators {
     const fieldsArray = ctx.state.query.fields;
 
     if (!validateFieldsArray(fieldsArray, validFields)) {
-      ctx.throw(400);
+      throw Boom.badRequest('Invalid query');
     }
-
     const fields = getFieldsObject(fieldsArray);
 
     // Pass the object of fields in the context.

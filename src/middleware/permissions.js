@@ -3,6 +3,8 @@
  */
 'use strict';
 
+import Boom from 'boom';
+
 export async function isAdminOrSelf (ctx, next) {
   // TODO: figure out a way to determine if user is himself
   return next();
@@ -20,7 +22,7 @@ export async function isAdmin (ctx, next) {
   if (isAdmin) {
     return next();
   } else {
-    ctx.throw(401);
+    throw Boom.forbidden('You don\'t have the right permissions to see this');
   }
 }
 
