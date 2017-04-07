@@ -105,7 +105,6 @@ UserSchema.pre('save', async function (next) {
  */
 UserSchema.methods.comparePassword = async function (password) {
   const storedPassword = this.password;
-  console.log(storedPassword)
   const isCorrect = await bcrypt.compare(password, storedPassword);
 
   return isCorrect;
