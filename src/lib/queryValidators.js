@@ -3,8 +3,6 @@
  */
 'use strict';
 
-import { getFieldsObject } from './utils';
-
 /**
  * @name validateFieldsArray
  * @function
