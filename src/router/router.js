@@ -6,18 +6,20 @@
 
 import Router from 'koa-router';
 
+import jwt from './../middleware/jwt';
+
 import usersRouter from './../apps/users/router';
+import userRouter from './../apps/user/router';
 import authRouter from './../apps/auth/router';
 import activationRouter from './../apps/activation/router';
-import registrationRouter from './../apps/registration/router';
 
 const API_VERSION = 1;
 const router = new Router({ prefix: `/api/v${API_VERSION}` });
 
 router
   .use('/users', usersRouter.routes(), usersRouter.allowedMethods())
+  .use('/user', jwt, userRouter.routes(), userRouter.allowedMethods())
   .use('/auth', authRouter.routes(), authRouter.allowedMethods())
-  .use('/activation', activationRouter.routes(), activationRouter.allowedMethods())
-  .use('/registration', registrationRouter.routes(), registrationRouter.allowedMethods());
+  .use('/activation', activationRouter.routes(), activationRouter.allowedMethods());
 
 export default router;

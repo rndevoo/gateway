@@ -3,66 +3,43 @@
  */
 'use strict';
 
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { User } from './../users/models/user';
 
 export class AuthHandlers {
+  /**
+   * @name login
+   * @method
+   *
+   * @description
+   * Checks the credentials and sends a token (JWT) if they match.
+   */
   static async login (ctx) {
     const { username, password } = ctx.request.body;
 
-    let user = await User.findOne({ username });
+    let userDoc = await User.findOne({ username });
 
-    if (user) {
-      user = user.toObject();
-    } else {
+    if (!userDoc) {
       ctx.throw(400);
     }
 
-    // Check if password matches record in database
-    const passwordMatches = await bcrypt.compare(password, user.password);
-
-    if (!passwordMatches) {
+    // Check if password matches record in database.
+    if (!await userDoc.comparePassword(password)) {
       ctx.throw(400);
     }
 
-    // JWT constants
+    // JSON Web Token stuff.
     const JWT_SECRET = process.env.JWT_SECRET;
     const JWT_EXPIRES_IN = '2 days';
 
-    // JWT payload
-    const jwtPayload = { name: user.firstName, isAdmin: user.isAdmin };
+    // Generate the token.
+    const jwtPayload = { id: userDoc._id, isAdmin: userDoc.isAdmin };
     const jwtOptions = { expiresIn: JWT_EXPIRES_IN, issuer: 'LetsMeet' };
     const token = jwt.sign(jwtPayload, JWT_SECRET, jwtOptions);
 
-    // We don't want to send back the hashed password
+    const user = userDoc.toObject();
     delete user.password;
     ctx.body = { token, user };
-  }
-
-  static async refresh (ctx) {
-    ctx.body = ctx.state.user;
-  }
-
-  static async password (ctx) {
-    const { id: userId } = ctx.state.user;
-    const { oldPass, newPass, newPassRepeat } = ctx.request.body;
-
-    const SALT_ROUNDS = process.env.PASS_SALT_ROUNDS;
-
-    const { password } = await User.retrieve('id', userId, ['password']);
-
-    const passwordMatches = await bcrypt.compare(oldPass, password);
-
-    if (!passwordMatches) {
-      ctx.throw(400);
-    }
-
-    const hashedNewPass = await bcrypt.hash(newPass, SALT_ROUNDS);
-
-    await User.update(userId, { password: hashedNewPass });
-
-    ctx.status = 200;
   }
 }

@@ -2,14 +2,12 @@
 
 import Router from 'koa-router';
 
-import jwt from './../../middlewares/jwt';
+import jwt from './../../middleware/jwt';
 import { AuthHandlers } from './handlers';
 
 const router = new Router();
 
 router
-  .post('/login', AuthHandlers.login)
-  .post('/refresh', jwt, AuthHandlers.refresh)
-  .post('/password', jwt);
+  .post('/login', AuthHandlers.login);
 
 export default router;

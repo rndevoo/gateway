@@ -5,7 +5,7 @@
 
 import Router from 'koa-router';
 
-import jwt from './../../middlewares/jwt';
+import jwt from './../../middleware/jwt';
 
 import { ActivationHandlers } from './handlers';
 

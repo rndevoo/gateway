@@ -4,7 +4,6 @@
 'use strict';
 
 import { User } from './../users/models/user';
-import { Profile } from './../users/models/profile';
 import { UserPreferences } from './../users/models/userPreferences';
 import { ActivationToken } from './models/activationToken';
 import { sendActivationMail } from './../../lib/mails';
@@ -24,7 +23,6 @@ export class ActivationHandlers {
     try {
       await Promise.all([
         User.update({ _id: token.user }, { $set: { isActive: true }}),
-        Profile.create({ user: token.user }),
         UserPreferences.create({ user: token.user }),
         ActivationToken.deleteOne({ token: queryToken }),
       ]);
