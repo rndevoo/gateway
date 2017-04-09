@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import bcrypt from 'bcrypt';
+import Boom from 'boom';
 
 import { sendActivationMail } from './../../lib/mails';
 
@@ -56,7 +56,17 @@ export class UsersHandlers {
   static async create (ctx) {
     const data = ctx.request.body;
 
-    const user = await User.create(data);
+    let user;
+    try {
+      user = await User.create(data);
+    } catch (e) {
+      switch (e.code) {
+        case 11000:
+          throw Boom.conflict(e.message);
+        default:
+          throw Boom.badRequest(e.message);
+      }
+    }
     const token = await ActivationToken.create({ user: user._id });
 
     sendActivationMail(user, token.token);
@@ -76,7 +86,9 @@ export class UsersHandlers {
     const response = await User.deleteOne({ _id: id });
 
     if (response.deletedCount != 1) {
-      ctx.throw(404);
+      throw Boom.notFound('The requested user does not exist');
     }
+
+    ctx.status = 200;
   }
 }
