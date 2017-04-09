@@ -13,6 +13,8 @@ const readline = require('readline');
 const commandLineArgs = require('command-line-args');
 const getUsage = require('command-line-usage');
 
+const db = require('./../src/config/db').default;
+const { mongoConnectionString } = require('./../src/config/db');
 const { User } = require('./../src/apps/users/models/user');
 
 const optionDefinitions = [
@@ -120,6 +122,8 @@ async function main () {
     console.log(getUsage(usageSections));
     return;
   }
+
+  db.open(mongoConnectionString);
 
   let data = await readData(args);
 
