@@ -78,13 +78,14 @@ const UserSchema = new Schema({
 const SALT_ROUNDS = parseInt(process.env.PASS_SALT_ROUNDS, 10);
 
 /**
+ * @name hashPassPreSave
  * @function
  *
  * @description
  * Pre save hook for the user model.
  * Checks if password was modified and if so, hashes it (bcrypt).
  */
-UserSchema.pre('save', async function (next) {
+UserSchema.pre('save', async function hashPassPreSave (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -94,22 +95,36 @@ UserSchema.pre('save', async function (next) {
 });
 
 /**
+ * @name comparePassword
  * @function
  *
  * @description
  * Compares a plaintext password with the hashed one stored in the database.
  *
- * @param {String} password - The plaintext password to compare.
+ * @param {String} pass - The plaintext password to compare.
  *
- * @returns {Boolean} True if they match, false otherwise.
+ * @returns {Boolean} true if they match, false otherwise.
  */
-UserSchema.methods.comparePassword = async function (password) {
-  const storedPassword = this.password;
-  const isCorrect = await bcrypt.compare(password, storedPassword);
+UserSchema.methods.comparePassword = async function comparePassword (pass) {
+  /**
+   * I have to select the password explicitly because in the schema,
+   * the password field is defined with select: false.
+   */
+  const { password: storedPassword } = await this.model('User')
+    .findOne({ _id: this._id })
+    .select({ password: 1 });
+
+  // Compare the plaintext password with the hash stored.
+  const isCorrect = await bcrypt.compare(pass, storedPassword);
 
   return isCorrect;
 };
 
 const User = db.model('User', UserSchema);
 
-export { User };
+/**
+ * The model is tightly coupled with the main database,
+ * @see {@link src/config/db.js}
+ * So the schema is exported for registering it in test databases.
+ */
+export { User, UserSchema };
