@@ -20,16 +20,16 @@ export default function () {
     try {
       await next();
     } catch (e) {
-      let error;
+      let error = e;
       // If it's not a Boom error or is a server error, log it and send a 500.
-      if (!e.isBoom && e.status && !Number.isNaN(e.status)) {
+      if (!error.isBoom && error.status && !Number.isNaN(error.status)) {
         // Koa JWT middleware throws with ctx.throw(401).
-        if (e.status === 401) {
+        if (error.status === 401) {
           error = Boom.unauthorized('You must be logged in to access.');
         } else {
           error = Boom.create(e.status);
         }
-      } else {
+      } else if (!error.isBoom) {
         logger.error(e);
         error = Boom.badImplementation('An internal server error ocurred.');
       }
