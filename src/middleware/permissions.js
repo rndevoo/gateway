@@ -22,7 +22,7 @@ export async function isAdmin (ctx, next) {
   if (isAdmin) {
     return next();
   } else {
-    throw Boom.forbidden('You don\'t have the right permissions to see this');
+    throw Boom.forbidden('You don\'t have the right permissions to access this');
   }
 }
 
