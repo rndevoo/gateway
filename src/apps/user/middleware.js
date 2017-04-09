@@ -5,7 +5,7 @@
 
 import Boom from 'boom';
 
-import { validateFieldsArray } from './../../lib/queryValidators';
+import { validateFields } from './../../lib/queryValidators';
 import { getFieldsObject } from './../../lib/utils';
 
 export class UserValidators {
@@ -22,7 +22,7 @@ export class UserValidators {
 
     const fieldsArray = ctx.state.query.fields;
 
-    if (!validateFieldsArray(fieldsArray, validFields)) {
+    if (!validateFields(fieldsArray, validFields)) {
       throw Boom.badRequest('Invalid query');
     }
     const fields = getFieldsObject(fieldsArray);
