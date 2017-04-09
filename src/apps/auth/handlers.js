@@ -4,6 +4,7 @@
 'use strict';
 
 import jwt from 'jsonwebtoken';
+import Boom from 'boom';
 
 import { User } from './../users/models/user';
 
@@ -21,12 +22,12 @@ export class AuthHandlers {
     let userDoc = await User.findOne({ username });
 
     if (!userDoc) {
-      ctx.throw(400);
+      throw Boom.badRequest('Username and password don\'t match.');
     }
 
     // Check if password matches record in database.
     if (!await userDoc.comparePassword(password)) {
-      ctx.throw(400);
+      throw Boom.badRequest('Username and password don\'t match.');
     }
 
     // JSON Web Token stuff.
@@ -39,7 +40,6 @@ export class AuthHandlers {
     const token = jwt.sign(jwtPayload, JWT_SECRET, jwtOptions);
 
     const user = userDoc.toObject();
-    delete user.password;
     ctx.body = { token, user };
   }
 }
