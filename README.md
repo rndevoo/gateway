@@ -1,5 +1,7 @@
 # LetsMeet Backend
 
+[![Build Status](https://travis-ci.com/strattadb/letsmeet-backend.svg?token=Cv2jSMJveoBgjhzMASyM&branch=master)](https://travis-ci.com/strattadb/letsmeet-backend)
+
 ## Introduction
 
 This is the official repository of the backend of LetsMeet.
