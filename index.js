@@ -16,7 +16,11 @@ import dotenv from 'dotenv';
 // Load env variables with dotenv.
 dotenv.load();
 
-// This is a hack due to Node not supporting natively ES2015 modules.
-const start = require('./src/server').default;
-
-start();
+/**
+ * This is a hack due to Node not supporting natively ES2015 modules.
+ * So Babel will move import..from to the top of the file,
+ * thus not letting dotenv load variables before server is imported.
+ */
+import('./src/server').then((server) => {
+  server.start();
+});
