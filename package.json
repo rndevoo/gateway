@@ -12,7 +12,7 @@
     "preserve:prod": "npm run build",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "mocha src/**/*.spec.js --compilers js:babel-register",
-    "test:integration": "",
+    "test:integration": "exit 0",
     "lint": "eslint src test --fix",
     "copyenvfile": "scripts/gen_env_file",
     "createadmin": "scripts/create_admin"
@@ -38,7 +38,7 @@
     "koa-jwt": "^3.2.1",
     "koa-logger": "^2.0.1",
     "koa-router": "next",
-    "mongoose": "^4.9.3",
+    "mongoose": "^4.9.4",
     "nodemailer": "^4.0.0",
     "qs": "^6.4.0",
     "validator": "^7.0.0",
