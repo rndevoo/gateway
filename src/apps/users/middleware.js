@@ -6,11 +6,8 @@
 import Joi from 'joi';
 import Boom from 'boom';
 
-import {
-  validateFields,
-  validateFilters
-} from './../../lib/queryValidators';
-import { getFieldsObject } from './../../lib/utils';
+import { validateFields } from './../../lib/queryValidators';
+import { getFieldsObject, getSortsObject } from './../../lib/utils';
 
 export class UsersValidators {
   /**
@@ -18,10 +15,34 @@ export class UsersValidators {
    * @method
    *
    * @description
-   * Validates fields to show, filters and sorts by.
+   * Validates fields to show, filters and sorts.
    */
   static async list (ctx, next) {
+    // Pass the object of fields in the context.
+    ctx.state.fields = getFieldsObject(ctx.state.fields);
+    ctx.state.sorts = getSortsObject(ctx.state.sorts);
+    return next();
+  }
 
+  static async detail (ctx, next) {
+    const validFields = [
+      'username',
+      'firstName',
+      'bio',
+      'birthDate',
+    ];
+
+    const fieldsArray = ctx.state.fields.length
+      ? ctx.state.fields
+      : validFields;
+
+    if (!validateFields(fieldsArray, validFields)) {
+      throw Boom.badRequest('Invalid querystring');
+    }
+
+    // Pass the object of fields in the context.
+    ctx.state.fields = getFieldsObject(fieldsArray);
+    return next();
   }
 
   /*

@@ -19,7 +19,15 @@ export class UsersHandlers {
    * Sends the list of users.
    */
   static async list (ctx) {
-    ctx.body = await User.find();
+    const filters = ctx.state.filters;
+    const fields = ctx.state.fields;
+    const sorts = ctx.state.sorts;
+
+    ctx.body = await User
+      .find(filters)
+      .populate('preferences')
+      .select(fields)
+      .sort(sorts);
   }
 
   /**
@@ -33,16 +41,15 @@ export class UsersHandlers {
     const { id } = ctx.params;
     const fields = ctx.state.fields;
 
-    const user = await User
+    const userDoc = await User
       .findOne({ _id: id })
-      .populate('profile')
       .select(fields);
 
-    if (!user) {
-      ctx.throw(404);
+    if (!userDoc) {
+      throw Boom.notFound('User not found');
     }
 
-    ctx.body = user.toObject();
+    ctx.body = userDoc.toObject();
   }
 
   /**

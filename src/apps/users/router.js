@@ -13,8 +13,8 @@ import { isAdmin  } from './../../middleware/permissions';
 const router = new Router();
 
 router
-  .get('/', jwt, isAdmin, UsersHandlers.list)
-  .get('/:id', UsersHandlers.detail)
+  .get('/', jwt, isAdmin, UsersValidators.list, UsersHandlers.list)
+  .get('/:id', UsersValidators.detail, UsersHandlers.detail)
   .post('/', UsersValidators.create, UsersHandlers.create)
   .delete('/:id', jwt, isAdmin, UsersHandlers.delete);
 

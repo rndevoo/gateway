@@ -69,6 +69,7 @@ const UserSchema = new Schema({
     trim: true,
   },
   birthDate: Date,
+  matches: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   preferences: {
     type: Schema.Types.ObjectId,
     ref: 'UserPreferences',
