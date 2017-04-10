@@ -3,8 +3,6 @@
  */
 'use strict';
 
-import Boom from 'boom';
-
 import { User } from './../users/models/user';
 import { UserPreferences } from './../users/models/userPreferences';
 
