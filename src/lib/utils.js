@@ -45,3 +45,23 @@ export function getFieldsObject (fieldsArray = []) {
 
   return fields;
 }
+
+/**
+ * @name getSortsObject
+ * @function
+ *
+ * @description
+ * Returns an object of sorts ready to be passed to Mongoose's .sort().
+ *
+ * @param {String[]} [sortsArray] - The array of sorts. E.g., ['-email']
+ *
+ * @returns {Object} The object to be passed. E.g., { username: -1 }
+ */
+export function getSortsObject (sortsArray = []) {
+  let sorts = {};
+  sortsArray.forEach((sort) => {
+    sorts[sort] = sort[0] === '-' ? -1 : 1;
+  });
+
+  return sorts;
+}
