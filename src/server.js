@@ -19,6 +19,7 @@ import logger from './config/winston';
 
 import { default as db, mongoConnectionString } from './config/db';
 import queryParser from './middleware/qs';
+import parseFiltersFieldsAndSorts from './middleware/parseFiltersFieldsAndSorts';
 import errorHandler from './middleware/errorHandler';
 import router from './router/router';
 
@@ -32,9 +33,10 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Plug in the middleware.
 app
-  .use(errorHandler())
+  .use(errorHandler)
   .use(koaLogger())
-  .use(queryParser())
+  .use(queryParser)
+  .use(parseFiltersFieldsAndSorts)
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods());
@@ -54,7 +56,7 @@ if (NODE_ENV === 'production') {
  * @description
  * Just a wrapper for starting the server.
  */
-export default function start () {
+export function start () {
   app.listen(PORT, () => {
     logger.info(`LetsMeet server running in ${NODE_ENV} mode on port ${PORT}`);
   });
