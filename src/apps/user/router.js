@@ -11,6 +11,6 @@ import { UserValidators } from './middleware';
 const router = new Router();
 
 router
-  .get('/', UserValidators.detailFields, UserHandlers.detail);
+  .get('/', UserValidators.detail, UserHandlers.detail);
 
 export default router;
