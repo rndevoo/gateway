@@ -22,7 +22,7 @@ const db = mongoose.createConnection();
 db.on('error', (err) => {
   logger.error(`Mongoose connection error: ${err}`);
 }).once('open', () => {
-  logger.info(`Mongoose connection open successfuly on ${mongoConnectionString}`);
+  logger.info(`Mongoose connection opened successfuly on ${mongoConnectionString}`);
 }).once('disconnected', () => {
   logger.info('Mongoose disconnected');
 });
