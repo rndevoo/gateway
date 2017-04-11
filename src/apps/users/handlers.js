@@ -19,14 +19,15 @@ export class UsersHandlers {
    * Sends the list of users.
    */
   static async list (ctx) {
-    const filters = ctx.state.filters;
-    const fields = ctx.state.fields;
-    const sorts = ctx.state.sorts;
+    const { filters, fields, page, perPage, sorts } = ctx.state;
 
     ctx.body = await User
       .find(filters)
+      .lean()
       .populate('preferences')
       .select(fields)
+      .skip((page - 1) * perPage)
+      .limit(perPage)
       .sort(sorts);
   }
 

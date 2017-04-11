@@ -20,7 +20,7 @@ export class UserHandlers {
 
     let userDoc = await User
       .findOne({ _id: id })
-      .populate('userPreferences')
+      .populate('preferences')
       .select(fields);
 
     const user = userDoc.toObject();
