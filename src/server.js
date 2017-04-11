@@ -15,11 +15,11 @@
 import Koa from 'koa';
 import koaLogger from 'koa-logger';
 import bodyParser from 'koa-bodyparser';
+import Boom from 'boom';
 import logger from './config/winston';
 
 import { default as db, mongoConnectionString } from './config/db';
-import queryParser from './middleware/qs';
-import parseFiltersFieldsAndSorts from './middleware/parseFiltersFieldsAndSorts';
+import queryParser from './middleware/queryParser';
 import errorHandler from './middleware/errorHandler';
 import router from './router/router';
 
@@ -36,10 +36,13 @@ app
   .use(errorHandler)
   .use(koaLogger())
   .use(queryParser)
-  .use(parseFiltersFieldsAndSorts)
   .use(bodyParser())
   .use(router.routes())
-  .use(router.allowedMethods());
+  .use(router.allowedMethods({
+    throw: true,
+    notImplemented: () => Boom.notImplemented(),
+    methodNotAllowed: () => Boom.methodNotAllowed(),
+  }));
 
 /**
  * In development we want to load env variables before we start the server.
