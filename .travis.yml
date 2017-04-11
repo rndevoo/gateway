@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "7"
 env:
-  - CXX=g++-4.8
+  - CXX=g++-6
 script:
   - npm run lint
   - npm test
@@ -14,4 +14,4 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
+      - g++-6
