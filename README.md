@@ -1,6 +1,7 @@
 # LetsMeet Backend
 
 [![Build Status](https://travis-ci.com/strattadb/letsmeet-backend.svg?token=Cv2jSMJveoBgjhzMASyM&branch=master)](https://travis-ci.com/strattadb/letsmeet-backend)
+[![CircleCI](https://circleci.com/gh/strattadb/letsmeet-backend.svg?style=svg&circle-token=37908f23da65109a113bf72fc3543fcbc188b7e8)](https://circleci.com/gh/strattadb/letsmeet-backend)
 
 ## Introduction
 
