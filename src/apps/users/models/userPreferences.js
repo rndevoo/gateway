@@ -21,4 +21,4 @@ const UserPreferencesSchema = new Schema({
 
 const UserPreferences = db.model('UserPreferences', UserPreferencesSchema);
 
-export { UserPreferences };
+export { UserPreferencesSchema, UserPreferences };
