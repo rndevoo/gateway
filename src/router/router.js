@@ -11,6 +11,7 @@ import jwt from './../middleware/jwt';
 import usersRouter from './../apps/users/router';
 import userRouter from './../apps/user/router';
 import authRouter from './../apps/auth/router';
+import meetingsRouter from './../apps/meetings/router';
 import activationRouter from './../apps/activation/router';
 
 const API_VERSION = 1;
@@ -20,6 +21,7 @@ router
   .use('/users', usersRouter.routes(), usersRouter.allowedMethods())
   .use('/user', jwt, userRouter.routes(), userRouter.allowedMethods())
   .use('/auth', authRouter.routes(), authRouter.allowedMethods())
+  .use('/meetings', jwt, meetingsRouter.routes(), meetingsRouter.allowedMethods())
   .use('/activation', activationRouter.routes(), activationRouter.allowedMethods());
 
 export default router;
