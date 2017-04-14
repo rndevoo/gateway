@@ -11,6 +11,13 @@ import { UserValidators } from './middleware';
 const router = new Router();
 
 router
-  .get('/', UserValidators.detail, UserHandlers.detail);
+  .get('/', UserValidators.detail, UserHandlers.detail)
+  .patch('/', UserValidators.update, UserHandlers.update)
+  .patch('/password', UserValidators.updatePassword, UserHandlers.update)
+  .patch(
+    '/preferences',
+    UserValidators.updatePreferences,
+    UserHandlers.updatePreferences
+  );
 
 export default router;
