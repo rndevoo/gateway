@@ -4,23 +4,23 @@
 'use strict';
 
 /**
- * @name validateFields
+ * @name validateKeys
  * @function
  *
  * @description
- * Validates an array of fields.
+ * Validates an array of keys.
  *
- * @param {String[]} fieldsArray - The array of fields to validate.
- * @param {String[]} validFields - The array of valid fields.
+ * @param {String[]} keysArray - The array of keys to validate.
+ * @param {String[]} validKeys - The array of valid keys.
  *
  * @returns {Boolean} true if valid, false otherwise.
  */
-export function validateFields (fieldsArray = [], validFields = []) {
-  // This is just verifying that every field is valid.
-  const fieldsAreValid = fieldsArray
-    .every((field) => validFields.includes(field));
+export function validateKeys (keysArray = [], validKeys = []) {
+  // This is just verifying that every key is valid.
+  const keysAreValid = keysArray
+    .every((key) => validKeys.includes(key));
 
-  return fieldsAreValid;
+  return keysAreValid;
 }
 
 /**
