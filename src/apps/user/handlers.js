@@ -15,16 +15,14 @@ export class UserHandlers {
    * Sends the currently logged in user's data.
    */
   static async detail (ctx) {
-    const { id } = ctx.state.user;
-    const fields = ctx.state.fields;
+    const { user: { id }, fields } = ctx.state;
 
     let userDoc = await User
       .findOne({ _id: id })
       .populate('preferences')
       .select(fields);
 
-    const user = userDoc.toObject();
-    ctx.body = user;
+    ctx.body = userDoc.toObject();
   }
 
   /**
