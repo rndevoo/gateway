@@ -1,6 +1,6 @@
 /**
  * @overview The Meeting model.
- * The place field is an id from the Google Places API.
+ * The placeId field is an id from the Google Places API.
  */
 'use strict';
 
@@ -12,7 +12,8 @@ const Schema = mongoose.Schema;
 
 const MeetingSchema = new Schema({
   creator: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  place: { type: String, required: true },
+  placeId: { type: String, required: true },
+  datetime: { type: Date, required: true },
   description: { type: String, maxlength: 512 },
   userAccepted: { type: Schema.Types.ObjectId, ref: 'User' },
   usersInterested: [{ type: Schema.Types.ObjectId, ref: 'User' }],
