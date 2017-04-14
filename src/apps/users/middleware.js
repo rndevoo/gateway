@@ -6,7 +6,7 @@
 import Joi from 'joi';
 import Boom from 'boom';
 
-import { validateFields } from './../../lib/queryValidators';
+import { validateKeys } from './../../lib/queryValidators';
 import { getFieldsObject, getSortsObject } from './../../lib/utils';
 
 export class UsersValidators {
@@ -24,6 +24,13 @@ export class UsersValidators {
     return next();
   }
 
+  /**
+   * @name detail
+   * @method
+   *
+   * @description
+   * Sends the public details of the requested user.
+   */
   static async detail (ctx, next) {
     const validFields = [
       'username',
@@ -36,7 +43,7 @@ export class UsersValidators {
       ? ctx.state.fields
       : validFields;
 
-    if (!validateFields(fieldsArray, validFields)) {
+    if (!validateKeys(fieldsArray, validFields)) {
       throw Boom.badRequest('Invalid querystring');
     }
 
