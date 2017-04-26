@@ -5,12 +5,18 @@ module.exports = {
     "es6": true,
     "mocha": true,
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:flowtype/recommended"
+  ],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module",
   },
+  "plugins": [
+    "flowtype"
+  ],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
