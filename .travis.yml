@@ -4,8 +4,9 @@ node_js:
 env:
   - CXX=g++-6
 script:
-  - npm run lint
-  - npm test
+  - yarn run lint
+  - yarn run flow
+  - yarn test
 cache: yarn
 services:
   - mongodb
