@@ -32,21 +32,21 @@
     "bcrypt": "^1.0.2",
     "boom": "^4.3.1",
     "joi": "^10.4.1",
-    "jsonwebtoken": "^7.3.0",
+    "jsonwebtoken": "^7.4.0",
     "koa": "^2.2.0",
     "koa-bodyparser": "^4.2.0",
     "koa-jwt": "^3.2.1",
     "koa-logger": "^2.0.1",
-    "koa-router": "next",
-    "mongoose": "^4.9.4",
-    "nodemailer": "^4.0.0",
+    "koa-router": "^7.1.1",
+    "mongoose": "^4.9.6",
+    "nodemailer": "^4.0.1",
     "qs": "^6.4.0",
     "validator": "^7.0.0",
     "winston": "^2.3.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.1",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-dynamic-import-node": "^1.0.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -59,13 +59,13 @@
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.32.1",
     "flow-bin": "^0.44.2",
-    "mocha": "^3.2.0",
+    "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
     "rimraf": "^2.6.1",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0"
   },
   "engines": {
-    "node": ">=7.6.0"
+    "node": ">=7.9.0"
   }
 }
