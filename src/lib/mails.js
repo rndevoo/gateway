@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview Various email template sender functions.
  */
@@ -5,8 +7,8 @@
 
 import { transporter } from './../config/nodemailer';
 
-const API_HOST = process.env.API_HOST;
-const EMAIL_URI = process.env.EMAIL_URI;
+const API_HOST: string = process.env.API_HOST || 'http://localhost:8080';
+const EMAIL_URI: string = process.env.EMAIL_URI || 'example@example.com';
 
 /**
  * @name sendActivationMail
@@ -15,16 +17,18 @@ const EMAIL_URI = process.env.EMAIL_URI;
  * @description
  * Sends the activation mail containing the URL to activate the account.
  *
- * @param {Object} user - The user's data.
- * @param {String} user.username - The user's username.
- * @param {String} user.emal - The user's email.
- * @param {String} token - The token string.
+ * @param {string} username - The user's username.
+ * @param {string} email - The user's email.
+ * @param {string} token - The token string.
  */
-export async function sendActivationMail (user, token) {
+export async function sendActivationMail (
+  { username, email }: { username: string, email: string },
+  token: string,
+) {
   const activationURL = `${API_HOST}/api/v1/activation?activation_token=${token}`;
 
   const emailText = `
-  Hi, ${user.username}
+  Hi, ${username}
 
   Thank you for registering in LetsMeet!
 
@@ -36,7 +40,7 @@ export async function sendActivationMail (user, token) {
 
   const mailOptions = {
     from: `"LetsMeet Team" <${EMAIL_URI}>`,
-    to: user.email,
+    to: email,
     subject: 'Confirm your LetsMeet email address!',
     text: emailText,
   };

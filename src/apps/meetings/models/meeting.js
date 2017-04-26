@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The Meeting model.
  * The placeId field is an id from the Google Places API.

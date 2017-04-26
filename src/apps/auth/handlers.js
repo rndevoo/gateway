@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The authentication handlers.
  */
@@ -16,11 +18,12 @@ export class AuthHandlers {
    * @description
    * Checks the credentials and sends a token (JWT) if they match.
    */
-  static async login (ctx) {
+  static async login (ctx: Object) {
     const { username, password } = ctx.request.body;
 
     let userDoc = await User.findOne({ username });
 
+    // Check if user exists in database.
     if (!userDoc) {
       throw Boom.badRequest('Username and password don\'t match.');
     }

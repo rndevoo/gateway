@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview Utility functions.
  */
@@ -12,16 +14,17 @@ import crypto from 'crypto';
  * @description
  * Generates a random hash to use as an activation token.
  *
- * @returns {String} The activation token.
+ * @returns {string} The activation token.
  */
-export function genActivationToken () {
+export function genActivationToken (): string {
   const HASH_ALGORITHM = 'sha256';
+  // Random bytes to use as salt.
   const RANDOM_BYTES = crypto.randomBytes(64);
   const ENCODING = 'hex';
 
   const hash = crypto.createHash(HASH_ALGORITHM);
 
-  const token = hash.update(RANDOM_BYTES).digest(ENCODING);
+  const token: string = hash.update(RANDOM_BYTES).digest(ENCODING);
 
   return token;
 }
@@ -33,11 +36,11 @@ export function genActivationToken () {
  * @description
  * Returns an object of fields ready to be passed to Mongoose's .select().
  *
- * @param {String[]} [fieldsArray] - The array of fields.
+ * @param {string[]} [fieldsArray] - The array of fields.
  *
  * @returns {Object} The object to be passed. E.g., { username: 1 }
  */
-export function getFieldsObject (fieldsArray = []) {
+export function getFieldsObject (fieldsArray: string[] = []): Object {
   let fields = {};
   fieldsArray.forEach((field) => {
     fields[field] = 1;
@@ -53,11 +56,11 @@ export function getFieldsObject (fieldsArray = []) {
  * @description
  * Returns an object of sorts ready to be passed to Mongoose's .sort().
  *
- * @param {String[]} [sortsArray] - The array of sorts. E.g., ['-email']
+ * @param {string[]} [sortsArray] - The array of sorts. E.g., ['-email']
  *
  * @returns {Object} The object to be passed. E.g., { username: -1 }
  */
-export function getSortsObject (sortsArray = []) {
+export function getSortsObject (sortsArray: string[] = []): Object {
   let sorts = {};
   sortsArray.forEach((sort) => {
     sorts[sort] = sort[0] === '-' ? -1 : 1;

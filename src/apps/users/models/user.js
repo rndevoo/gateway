@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The User model.
  */
@@ -76,7 +78,12 @@ const UserSchema = new Schema({
   },
 });
 
-const SALT_ROUNDS = parseInt(process.env.PASS_SALT_ROUNDS, 10);
+/**
+ * How many rounds of hashing, the more rounds, the slower
+ * it gets (and safer).
+ * Nowadays 10 rounds is enough.
+ */
+const SALT_ROUNDS: number = parseInt(process.env.PASS_SALT_ROUNDS, 10);
 
 /**
  * @name hashPassPreSave
@@ -102,11 +109,13 @@ UserSchema.pre('save', async function hashPassPreSave (next) {
  * @description
  * Compares a plaintext password with the hashed one stored in the database.
  *
- * @param {String} pass - The plaintext password to compare.
+ * @param {string} pass - The plaintext password to compare.
  *
- * @returns {Boolean} true if they match, false otherwise.
+ * @returns {boolean} true if they match, false otherwise.
  */
-UserSchema.methods.comparePassword = async function comparePassword (pass) {
+UserSchema.methods.comparePassword = async function comparePassword (
+  pass: string,
+): Promise<boolean> {
   /**
    * I have to select the password explicitly because in the schema,
    * the password field is defined with select: false.

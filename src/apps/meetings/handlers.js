@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The meetings handlers.
  */
@@ -13,7 +15,7 @@ export class MeetingsHandlers {
    * @description
    * List the meetings.
    */
-  static async list (ctx) {
+  static async list (ctx: Object) {
     // TODO
     ctx.body = await Meeting.find();
   }
@@ -25,7 +27,7 @@ export class MeetingsHandlers {
    * @description
    * Creates a new meeting.
    */
-  static async create (ctx) {
+  static async create (ctx: Object) {
     const data = ctx.request.body;
 
     await Meeting.create(data);

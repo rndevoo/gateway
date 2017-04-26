@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The users handlers.
  */
@@ -18,7 +20,7 @@ export class UsersHandlers {
    * @description
    * Sends the list of users.
    */
-  static async list (ctx) {
+  static async list (ctx: Object) {
     const { filters, fields, page, perPage, sorts } = ctx.state;
 
     ctx.body = await User
@@ -38,7 +40,7 @@ export class UsersHandlers {
    * @description
    * Sends the requested user's public information.
    */
-  static async detail (ctx) {
+  static async detail (ctx: Object) {
     const { id } = ctx.params;
     const fields = ctx.state.fields;
 
@@ -61,7 +63,7 @@ export class UsersHandlers {
    * Creates and saves a new user and activation token.
    * Sends an email to the user with a link to verify his email.
    */
-  static async create (ctx) {
+  static async create (ctx: Object) {
     const data = ctx.request.body;
 
     let user;
@@ -89,7 +91,7 @@ export class UsersHandlers {
    * @description
    * Deletes the requested user.
    */
-  static async delete (ctx) {
+  static async delete (ctx: Object) {
     const { id } = ctx.params;
     const response = await User.deleteOne({ _id: id });
 

@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The user handlers.
  */
@@ -14,7 +16,7 @@ export class UserHandlers {
    * @description
    * Sends the currently logged in user's data.
    */
-  static async detail (ctx) {
+  static async detail (ctx: Object) {
     const { user: { id }, fields } = ctx.state;
 
     let userDoc = await User
@@ -32,7 +34,7 @@ export class UserHandlers {
    * @description
    * Updates the user currently logged in.
    */
-  static async update (ctx) {
+  static async update (ctx: Object) {
     const { id } = ctx.state.user;
     const data = ctx.body;
 
@@ -46,7 +48,7 @@ export class UserHandlers {
    * @description
    * Updates the preferences of the user currently loggen in.
    */
-  static async updatePreferences (ctx) {
+  static async updatePreferences (ctx: Object) {
     const userId = ctx.state.user.id;
     const data = ctx.body;
 

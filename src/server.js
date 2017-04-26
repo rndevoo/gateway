@@ -1,3 +1,5 @@
+// @flow
+
 /**
  * @overview The production server's entry point.
  *

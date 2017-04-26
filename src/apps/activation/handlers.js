@@ -1,7 +1,11 @@
+// @flow
+
 /**
  * @overview The activation handlers.
  */
 'use strict';
+
+import Boom from 'boom';
 
 import { User } from './../users/models/user';
 import { UserPreferences } from './../users/models/userPreferences';
@@ -9,7 +13,14 @@ import { ActivationToken } from './models/activationToken';
 import { sendActivationMail } from './../../lib/mails';
 
 export class ActivationHandlers {
-  static async activate (ctx) {
+  /**
+   * @name activate
+   * @method
+   *
+   * @description
+   * Activates the user related to the activation token.
+   */
+  static async activate (ctx: Object) {
     const { activation_token: queryToken } = ctx.query;
 
     const token = await ActivationToken
@@ -17,9 +28,13 @@ export class ActivationHandlers {
       .select({ user: 1 });
 
     if (!token) {
-      ctx.throw(404);
+      throw Boom.notFound('Activation token not found.');
     }
 
+    /**
+     * Tries to update the user record, create the user preferences document
+     * and delete the activation token, since it is not necessary anymore.
+     */
     try {
       await Promise.all([
         User.update({ _id: token.user }, { $set: { isActive: true }}),
@@ -27,14 +42,22 @@ export class ActivationHandlers {
         ActivationToken.deleteOne({ token: queryToken }),
       ]);
     } catch (e) {
-      ctx.throw(500);
+      throw Boom.internal('Internal Server Error.');
     }
 
     ctx.status = 200;
   }
 
-  static async resendEmail (ctx) {
+  /**
+   * @name resendEmail
+   * @method
+   *
+   * @description
+   * Resends the confirmation email.
+   */
+  static async resendEmail (ctx: Object) {
     const { user } = ctx.state;
+
     const { token } = await ActivationToken
       .findOne({ userId: user.id })
       .select({ token: 1 });
