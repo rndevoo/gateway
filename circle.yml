@@ -1,7 +1,8 @@
 machine:
   node:
-    version: 7.6.0
+    version: 7.9.0
 
 test:
   pre:
-    - npm run lint
+    - yarn run lint
+    - yarn run flow
