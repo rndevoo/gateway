@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/strattadb/letsmeet-backend.svg?token=Cv2jSMJveoBgjhzMASyM&branch=master)](https://travis-ci.com/strattadb/letsmeet-backend)
 [![CircleCI](https://circleci.com/gh/strattadb/letsmeet-backend.svg?style=shield&circle-token=37908f23da65109a113bf72fc3543fcbc188b7e8)](https://circleci.com/gh/strattadb/letsmeet-backend)
 [![David](https://david-dm.org/strattadb/letsmeet-backend.svg)](https://david-dm.org/strattadb/letsmeet-backend)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ## Introduction
 
