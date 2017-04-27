@@ -5,4 +5,4 @@ machine:
 test:
   pre:
     - yarn run lint
-    - yarn run flow
+    - yarn flow

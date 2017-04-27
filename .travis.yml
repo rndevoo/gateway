@@ -5,7 +5,7 @@ env:
   - CXX=g++-6
 script:
   - yarn run lint
-  - yarn run flow
+  - yarn flow
   - yarn test
 cache: yarn
 services:
