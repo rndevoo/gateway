@@ -1,15 +1,13 @@
-# LetsMeet Backend
+# Rndevoo Backend
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/strattadb/letsmeet-backend.svg?token=7404c7242cc9a1d6b38d43aea288a26b366754f0944cf4ce2317326fc6e769ef&ts=1493346461659)](https://greenkeeper.io/)
-
-[![Build Status](https://travis-ci.com/strattadb/letsmeet-backend.svg?token=Cv2jSMJveoBgjhzMASyM&branch=master)](https://travis-ci.com/strattadb/letsmeet-backend)
-[![CircleCI](https://circleci.com/gh/strattadb/letsmeet-backend.svg?style=shield&circle-token=37908f23da65109a113bf72fc3543fcbc188b7e8)](https://circleci.com/gh/strattadb/letsmeet-backend)
-[![David](https://david-dm.org/strattadb/letsmeet-backend.svg)](https://david-dm.org/strattadb/letsmeet-backend)
+[![Build Status](https://travis-ci.org/rndevoo/backend.svg?branch=master)](https://travis-ci.org/rndevoo/backend)
+[![CircleCI](https://circleci.com/gh/rndevoo/backend.svg?style=shield](https://circleci.com/gh/rndevoo/backend)
+[![David](https://david-dm.org/rndevoo/backend.svg)](https://david-dm.org/rndevoo/backend)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 ## Introduction
 
-This is the official repository of the backend of LetsMeet.
+This is the official repository of the backend of Rndevoo.
 
 It consists of a RESTful API written in [Node.js](https://nodejs.org/en/)
 and [Koa](http://koajs.com/) with features of ES2017,
