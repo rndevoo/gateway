@@ -4,7 +4,7 @@
 'use strict';
 
 import mongoose from 'mongoose';
-import logger from 'winston';
+import logger from './winston';
 
 const DB_NAME = process.env.DB_NAME;
 const DB_HOST = process.env.DB_HOST;

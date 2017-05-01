@@ -21,6 +21,4 @@ dotenv.load();
  * So Babel will move import..from to the top of the file,
  * thus not letting dotenv load variables before server is imported.
  */
-import('./src/server').then((server) => {
-  server.start();
-});
+import('./src/server').then((server) => server.start());

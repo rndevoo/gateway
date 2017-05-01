@@ -4,7 +4,7 @@
  * @overview The production server's entry point.
  *
  * This is the central server of LetsMeet. Here we import everything we need
- * and starting the server wihtout setting env variables(only in production).
+ * and starting the server wihtout setting env variables (only in production).
  *
  * In development, we export the start function @see {@link start} and call it
  * there @see {@link index.js} after loading all environmental variables.
