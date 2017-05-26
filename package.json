@@ -61,7 +61,7 @@
     "dotenv": "^4.0.0",
     "eslint": "^3.19.0",
     "eslint-plugin-flowtype": "^2.33.0",
-    "flow-bin": "^0.46.0",
+    "flow-bin": "^0.47.0",
     "mocha": "^3.4.1",
     "nodemon": "^1.11.0",
     "nyc": "^10.2.0",
