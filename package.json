@@ -1,75 +1,45 @@
 {
-  "name": "letsmeet-backend",
+  "name": "rndevoo-gateway",
   "version": "1.0.0",
-  "description": "The backend of LetsMeet",
+  "description": "rndevoo's API gateway",
   "main": "src/server.js",
   "scripts": {
-    "build": "babel src -d dist",
-    "serve:dev": "nodemon index.js --exec babel-node",
-    "serve:prod": "node dist/server.js",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "preserve:prod": "npm run build",
-    "test": "nyc npm run test:unit && npm run test:integration",
-    "test:unit": "mocha src/**/*.spec.js --compilers js:babel-register",
-    "test:integration": "exit 0",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "lint": "eslint src test --fix",
-    "copyenvfile": "scripts/gen_env_file",
-    "createadmin": "scripts/create_admin"
+    "build": "tsc",
+    "dev": "nodemon -e ts --exec ts-node src/server.ts",
+    "preprod": "npm run build",
+    "prod": "node dist/server.js",
+    "lint": "tslint --fix src",
+    "gen_env_file": "scripts/gen_env_file"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/strattadb/letsmeet-backend.git"
-  },
-  "private": true,
-  "author": "Diego Stratta",
+  "repository": "git@github.com:rndevoo/gateway.git",
+  "author": "Diego Stratta <strattadb@gmail.com>",
   "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/strattadb/letsmeet-backend/issues"
-  },
-  "homepage": "https://github.com/strattadb/letsmeet-backend#readme",
   "dependencies": {
-    "bcrypt": "^1.0.2",
-    "boom": "^5.0.0",
-    "joi": "^10.4.1",
-    "jsonwebtoken": "^7.4.0",
-    "koa": "^2.2.0",
-    "koa-bodyparser": "^4.2.0",
-    "koa-jwt": "^3.2.1",
-    "koa-logger": "^3.0.0",
-    "koa-router": "^7.1.1",
-    "mongoose": "^4.9.6",
-    "nodemailer": "^4.0.1",
-    "qs": "^6.4.0",
-    "validator": "^7.0.0",
+    "amqplib": "^0.5.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.3",
-    "babel-plugin-dynamic-import-node": "^1.0.1",
-    "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-flow": "^6.23.0",
+    "@types/amqplib": "^0.5.1",
+    "@types/dotenv": "^4.0.0",
+    "@types/node": "^7.0.18",
+    "@types/winston": "^2.3.2",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
-    "command-line-args": "^4.0.2",
-    "command-line-usage": "^4.0.0",
     "coveralls": "^2.13.1",
     "dotenv": "^4.0.0",
-    "eslint": "^3.19.0",
-    "eslint-plugin-flowtype": "^2.33.0",
-    "flow-bin": "^0.47.0",
-    "mocha": "^3.4.1",
+    "mocha": "^3.3.0",
     "nodemon": "^1.11.0",
     "nyc": "^10.2.0",
     "rimraf": "^2.6.1",
     "sinon": "^2.1.0",
-    "sinon-chai": "^2.9.0"
+    "sinon-chai": "^2.9.0",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2"
   },
   "engines": {
-    "node": ">=7.9.0"
+    "node": ">=7.10.0"
   }
 }

@@ -1,18 +1,7 @@
 language: node_js
 node_js:
   - "7"
-env:
-  - CXX=g++-6
 script:
   - yarn run lint
-  - yarn flow
   - yarn test
 cache: yarn
-services:
-  - mongodb
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6
