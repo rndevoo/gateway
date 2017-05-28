@@ -1,5 +1,6 @@
 node_modules
 dist
+tls
 .nyc_output
 coverage
 *.sw*
