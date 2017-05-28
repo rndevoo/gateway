@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 ##############################################################################
+#
 # Copies the environmental variables template file to the project root folder.
+#
 ##############################################################################
 
 # This file's directory

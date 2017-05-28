@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+##############################################################################
+#
+# Creates a private key and certificate to use TLS in our server.
+#
+##############################################################################
+
+# This file's directory.
+CURRENT_DIR="$( builtin cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PROJECT_ROOT_DIR="${CURRENT_DIR}/.."
+
+# Create folder if it doesn't exist.
+mkdir -p "${PROJECT_ROOT_DIR}/tls"
+
+# Create the key and certificate with a single command.
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout "${PROJECT_ROOT_DIR}/tls/self-signed.key" \
+  -out "${PROJECT_ROOT_DIR}/tls/self-signed.crt"
