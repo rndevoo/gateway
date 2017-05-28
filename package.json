@@ -18,12 +18,21 @@
   "license": "GPL-3.0",
   "dependencies": {
     "amqplib": "^0.5.1",
+    "graphql-server-koa": "^0.7.2",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-router": "^7.2.0",
+    "spdy": "^3.4.7",
     "winston": "^2.3.1"
   },
   "devDependencies": {
     "@types/amqplib": "^0.5.1",
     "@types/dotenv": "^4.0.0",
+    "@types/koa": "^2.0.39",
+    "@types/koa-bodyparser": "^3.0.23",
+    "@types/koa-router": "^7.0.22",
     "@types/node": "^7.0.22",
+    "@types/spdy": "^3.4.1",
     "@types/winston": "^2.3.2",
     "chai": "^4.0.0",
     "chai-as-promised": "^6.0.0",
