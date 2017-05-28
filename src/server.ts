@@ -1,9 +1,9 @@
 /**
  * @overview
- * The microservice's entry point.
+ * The API gateway's entry point. It exposes a GraphQL API.
  *
- * Here, we listen to messages in the logging queue and log them. Just that.
- * But useful for centralized logging.
+ * Its purpose is to act as an interface between the client and the
+ * microsevices.
  *
  * @author Diego Stratta <strattadb@gmail>
  * @license GPL-3.0
