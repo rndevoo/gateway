@@ -11,6 +11,7 @@ services:
       rndevoo_network:
         aliases:
           - gateway
+    env_file: .env
 
 networks:
   rndevoo_network:
