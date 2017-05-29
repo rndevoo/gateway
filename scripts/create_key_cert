@@ -2,7 +2,7 @@
 
 ##############################################################################
 #
-# Creates a private key and certificate to use TLS in our server.
+# Creates a self signed private key and certificate to use in our server.
 #
 ##############################################################################
 
