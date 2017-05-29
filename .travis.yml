@@ -1,6 +1,10 @@
+sudo: required
 language: node_js
 node_js:
   - "7"
+services:
+  - docker
+# TODO: Docker stuff.
 script:
   - yarn run lint
   - yarn test
