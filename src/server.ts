@@ -5,7 +5,7 @@
  * Its purpose is to act as an interface between the client and the
  * microsevices.
  *
- * @author Diego Stratta <strattadb@gmail>
+ * @author Diego Stratta <strattadb@gmail.com>
  * @license GPL-3.0
  */
 
@@ -14,6 +14,8 @@ import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import * as koaLogger from 'koa-logger';
 import * as amqplib from 'amqplib';
+
+import router from './router';
 
 import logger from './config/winston';
 import tls from './config/tls';
@@ -32,7 +34,7 @@ const PORT = process.env.PORT;
  * The application main function.
  */
 async function main () {
-  // First, we need to connect to the AMQP server.
+  // First, we need to connect to the RabbitMQ server.
   const conn = await amqplib.connect(RABBITMQ_SERVER_URL);
   logger.info(`Connection to RabbitMQ server at ${RABBITMQ_SERVER_URL} established.`);
 
@@ -44,7 +46,9 @@ async function main () {
   app
     .use(koaLogger())
     .use(bodyParser())
-    .use(rabbitmqChannel(ch));
+    .use(rabbitmqChannel(ch))
+    .use(router.routes())
+    .use(router.allowedMethods());
 
   // Create the HTTP/2 server. We use `as any` because TS likes to mess with me.
   const server = spdy.createServer(tls, app.callback() as any);
