@@ -9,24 +9,28 @@
  * @license GPL-3.0
  */
 
-import * as dotenv from 'dotenv';
-
-const NODE_ENV = process.env.NODE_ENV;
-// Load environmental variables from file if not running in production.
-if (NODE_ENV !== 'production') {
-  dotenv.config({ path: '../.env'});
-}
-
-import spdy from 'spdy';
-import Koa from 'koa';
-import bodyParser from 'koa-bodyparser';
+import * as spdy from 'spdy';
+import * as Koa from 'koa';
+import * as bodyParser from 'koa-bodyparser';
+import * as koaLogger from 'koa-logger';
 import * as amqplib from 'amqplib';
 
 import logger from './config/winston';
 import tls from './config/tls';
 
-const RABBITMQ_SERVER_URL = process.env.RABBITMQ_SERVER_URL;
+import rabbitmqChannel from './middleware/rabbitmqChannel';
 
+const NODE_ENV = process.env.NODE_ENV;
+const RABBITMQ_SERVER_URL = process.env.RABBITMQ_SERVER_URL;
+const PORT = process.env.PORT;
+
+/**
+ * @name main
+ * @function
+ *
+ * @description
+ * The application main function.
+ */
 async function main () {
   // First, we need to connect to the AMQP server.
   const conn = await amqplib.connect(RABBITMQ_SERVER_URL);
@@ -34,6 +38,18 @@ async function main () {
 
   const ch: amqplib.Channel = await conn.createChannel();
 
+  const app = new Koa();
+
+  // Plug in the middleware.
+  app
+    .use(koaLogger())
+    .use(bodyParser())
+    .use(rabbitmqChannel(ch));
+
+  // Create the HTTP/2 server. We use `as any` because TS likes to mess with me.
+  const server = spdy.createServer(tls, app.callback() as any);
+
+  server.listen(PORT, () => logger.info(`API gateway server listening on port ${PORT} on ${NODE_ENV} mode.`));
 }
 
 main();
