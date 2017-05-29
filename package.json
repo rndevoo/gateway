@@ -5,12 +5,15 @@
   "main": "src/server.js",
   "scripts": {
     "clean": "rimraf dist",
-    "prebuild": "npm run clean",
+    "prebuild": "yarn run clean",
     "build": "tsc",
     "dev": "nodemon -e ts --exec ts-node src/server.ts",
-    "preprod": "npm run build",
+    "preprod": "yarn run build",
     "prod": "node dist/server.js",
-    "lint": "tslint --fix src",
+    "test": "nyc yarn run test:unit && yarn run test:integration",
+    "test:unit": "mocha src/**/*.spec.ts --compilers ts:ts-node/register",
+    "test:integration": "mocha test --compilers ts:ts-node/register",
+    "lint": "tslint --fix src test",
     "gen_env_file": "scripts/gen_env_file"
   },
   "repository": "git@github.com:rndevoo/gateway.git",
