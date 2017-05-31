@@ -6,7 +6,7 @@
 import Router from 'koa-router';
 import graphql from 'graphql-server-koa';
 
-import { schema } from './schema';
+import schema from './schema';
 
 const router = new Router();
 
