@@ -120,6 +120,10 @@ Build and start the development container:
 $ docker-compose up
 ```
 
+It'll expose the API at `https://localhost:44300/graphql`.
+
+For GraphiQL go to `https://localhost:44300/graphiql`.
+
 In order to open a terminal session from inside the `web` Docker container run:
 
 ```bash
