@@ -50,7 +50,8 @@ async function main () {
     .use(router.routes())
     .use(router.allowedMethods());
 
-  // Create the HTTP/2 server. We use `as any` because TS likes to mess with me.
+  // Create the HTTP/2 server. We use `as any` because of incompatible
+  // type definitions. But it's okay.
   const server = spdy.createServer(tls, app.callback() as any);
 
   server.listen(PORT, () => logger.info(`API gateway server listening on port ${PORT} on ${NODE_ENV} mode.`));
