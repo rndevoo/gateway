@@ -7,23 +7,18 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 
-import UserType from './user';
-import MeetingType from './meeting';
+import { UserType, userResolver } from './user';
+import { MeetingType, meetingResolver } from './meeting';
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',
   fields: {
     user: {
       type: UserType,
-      async resolve () {
-
-      },
+      resolve: userResolver,
     },
     meeting: {
       type: MeetingType,
-      async resolve (obj, { id }, { ch }) {
-
-      },
     },
   },
 });

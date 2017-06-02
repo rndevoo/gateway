@@ -3,7 +3,7 @@
  * The user model. It acts as a kind of serializer for the user object.
  */
 
-export interface IUser {
+export interface UserInterface {
   id: string,
   firstName: string,
   lastName: string,
@@ -18,7 +18,7 @@ export class User {
   readonly firstName: string;
   readonly lastName: string;
 
-  constructor ({ id, firstName, lastName = '' }: IUser) {
+  constructor ({ id, firstName, lastName = '' }: UserInterface) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
