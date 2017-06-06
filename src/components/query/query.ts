@@ -7,8 +7,12 @@ import {
   GraphQLObjectType,
 } from 'graphql';
 
-import { UserType, userResolver } from './user';
-import { MeetingType, meetingResolver } from './meeting';
+import { UserType } from '../user';
+import { MeetingType } from '../meeting';
+
+import {
+  userResolver
+} from './resolvers';
 
 const QueryType = new GraphQLObjectType({
   name: 'Query',

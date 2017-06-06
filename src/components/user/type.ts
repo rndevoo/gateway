@@ -9,13 +9,14 @@ import {
   GraphQLString,
 } from 'graphql';
 
-const UserType = new GraphQLObjectType({
+const UserType: GraphQLObjectType = new GraphQLObjectType({
   name: 'User',
-  fields: {
+  fields: () => ({
     id: { type: GraphQLID },
     firstName: { type: GraphQLString },
     lastName: { type: GraphQLString },
-  },
+    matches: { type: UserType },
+  })
 });
 
 export { UserType };
