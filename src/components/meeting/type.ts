@@ -16,4 +16,4 @@ const MeetingType = new GraphQLObjectType({
   },
 });
 
-export default MeetingType;
+export { MeetingType };
