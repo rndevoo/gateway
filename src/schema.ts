@@ -5,7 +5,7 @@
 
  import { GraphQLSchema } from 'graphql';
 
- import QueryType from './types/query';
+ import { QueryType } from './components/query';
 
  const schema = new GraphQLSchema({ query: QueryType });
 
