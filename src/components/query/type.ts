@@ -27,4 +27,4 @@ const QueryType = new GraphQLObjectType({
   },
 });
 
-export default QueryType;
+export { QueryType };
